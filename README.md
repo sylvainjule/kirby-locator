@@ -1,0 +1,288 @@
+# Kirby Locator
+
+A simple map & geolocation field, built on top of open-source services and Mapbox. 
+
+![screenshot](https://user-images.githubusercontent.com/14079751/48486342-89e44680-e81b-11e8-93fb-c3eadd7fbb61.jpg)
+
+<br/>
+
+## Overview
+
+- [1. Installation](#1-installation)
+- [2. Setup](#2-setup)
+- [3. Tile-servers](#3-tile-servers)
+  * [3.1. Open-source / free tiles](#31-open-source-free-tiles)
+  * [3.2. Mapbox tiles](#32-mapbox-tiles)
+- [4. Geocoding service](#4-geocoding-service)
+  * [4.1. Open-source API (Nominatim)](#41-open-source-nominatim)
+  * [4.2. Mapbox API](#42-mapbox-api)
+- [5. Per-field options](#5-per-field-options)
+- [6. Global options](#6-global-options)
+- [7. Front-end usage](#6-front-end-usage)
+- [8. Credits](#7-credits)
+- [9. License](#8-license)
+
+<br/>
+
+## 1. Installation
+
+Download and copy this repository to ```/site/plugins/locator```
+
+Alternatively, you can install it with composer: ```composer require sylvainjule/locator```
+
+<br/>
+
+## 2. Setup
+
+Out of the box, the field is set to use open-source services both for geocoding (Nominatim) and tiles-rendering (Wikimedia), without any API-key requirements. 
+
+Keep in mind that **these services are bound by strict usage policies**, always double-check if your usage is compatible. Otherwise, please set-up the field to use Mapbox, see details below.
+
+```yaml
+mymap:
+  label: Location
+  type: locator
+```
+
+<br/>
+
+## 3. Tile-servers
+
+#### 3.1. Open-source / free tiles
+
+![tiles-opensource](https://user-images.githubusercontent.com/14079751/48486345-8a7cdd00-e81b-11e8-99ce-ea40c76c87a7.jpg)
+
+You can pick one of the 4 free tile servers included:
+- `wikimedia`, default ([Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))
+- `openstreetmap` ([Terms of Use](https://wiki.openstreetmap.org/wiki/Tile_usage_policy))
+- `positron` (Carto, [Terms of Use](https://carto.com/location-data-services/basemaps/))
+- `voyager` (Carto, [Terms of Use](https://carto.com/location-data-services/basemaps/))
+
+```yaml
+mymap:
+  type: locator
+  tiles: wikimedia
+```
+
+You can also set this globally in your installation's main `config.php`, then you won't have to configure it in every blueprint:
+
+```php
+return array(
+    'sylvainjule.locator.tiles' => 'wikimedia',
+);
+```
+
+#### 3.2. Mapbox tiles
+
+![tiles-mapbox](https://user-images.githubusercontent.com/14079751/48486344-89e44680-e81b-11e8-81fc-4c78347eea35.jpg)
+
+In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles.
+
+Leaflet doesn't render vector-maps, therefore you will not be able to use custom-styles edited with Mapbox Studio. However, Mapbox privides a bunch of useful tile-layers: `mapbox.outdoors` (default), `mapbox.streets` and `mapbox.dark`. 
+
+You will have to set both the `id` of the tiles you want to use and your mapbox `public key` in your installation's main `config.php`:
+
+```php
+return array(
+    'sylvainjule.locator.mapbox.id'    => 'mapbox.outdoors',
+    'sylvainjule.locator.mapbox.token' => 'pk.vdf561vf8...',
+);
+```
+
+You can now explicitely state in your blueprint that you want to use Mapbox tiles:
+
+```yaml
+mymap:
+  type: locator
+  tiles: mapbox
+```
+
+You can also set this globally in your installation's main `config.php`, then you won't have to configure it in every blueprint:
+
+```php
+return array(
+    'sylvainjule.locator.tiles' => 'mapbox',
+);
+```
+
+<br/>
+
+## 4. Geocoding services
+
+#### 4.1. Open-source API (Nominatim)
+
+This is the default geocoding service. It doesn't require any additional configuration, but please double-check if your needs fit the [Nominatim Usage Policy](https://operations.osmfoundation.org/policies/nominatim/).
+
+```yaml
+mymap:
+  type: locator
+  geocoding: nominatim
+```
+
+#### 4.2. Mapbox API
+
+In case your usage doesn't fall into the above policy (or if you don't want to use Nominatim), you can set-up the field to use Mapbox API.
+
+If you haven't already, you will have to set your mapbox `public key` in your installation's main `config.php`:
+
+```php
+return array(
+    'sylvainjule.locator.mapbox.token' => 'pk.vdf561vf8...',
+);
+```
+
+You can now explicitely state in your blueprint that you want to use Mapbox as a geocoding service:
+
+```yaml
+mymap:
+  type: locator
+  geocoding: mapbox
+```
+
+You can also set this globally in your installation's main `config.php`, then you won't have to configure it in every blueprint:
+
+```php
+return array(
+    'sylvainjule.locator.geocoding' => 'mapbox',
+);
+```
+
+<br/>
+
+## 5. Per-field options
+
+#### 5.1. `center`
+
+The coordinates of the center of the map, if the field has no stored value. Default is `{lat: 48.864716, lon: 2.349014}` (Paris, FR).
+
+```yaml
+mymap:
+  type: locator
+  center:
+    lat: 48.864716
+    lon: 2.349014
+```
+
+#### 5.2. `zoom`
+
+The `min`, `default` and `max` zoom values, where `default` will be the one used on every first-load of the map. Default is: `{min: 2, default: 12, max: 18}`.
+
+```yaml
+mymap:
+  type: locator
+  zoom:
+    min: 2
+    default: 12
+    max: 18
+```
+
+#### 5.3. `display`
+
+The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city` and `country`. Default includes them all.
+
+```yaml
+mymap:
+  type: locator
+  display:
+    - lat
+    - lon
+    - number
+    - address
+    - postcode
+    - city
+    - country
+```
+
+#### 5.4. `liststyle`
+
+![liststyle](https://user-images.githubusercontent.com/14079751/48487819-9cf91580-e81f-11e8-8e20-eba57f122261.jpg)
+
+The style of the informations block, either `columns` or `table`. Default is `columns`.
+
+```yaml
+mymap:
+  type: locator
+  liststyle: columns
+```
+
+
+#### 5.5. `marker`
+
+The color of the marker used, either `dark` or `light` (in case you are using `mapbox.dark` as your tile-layer). Default is `dark`.
+
+```yaml
+mymap:
+  type: locator
+  marker: dark
+```
+
+<br/>
+
+## 6. Global options
+
+The same options are available globally, which means you can set them all in your installation's `config.php` file and don't worry about setting it up individually afterwards:
+
+```php 
+return array(
+    'sylvainjule.locator.center.lat'   => 48.864716,
+    'sylvainjule.locator.center.lon'   => 2.349014,
+    'sylvainjule.locator.zoom.min'     => 2,
+    'sylvainjule.locator.zoom.default' => 12,
+    'sylvainjule.locator.zoom.max'     => 18,
+    'sylvainjule.locator.display'      => array('lat','lon','number','address','postcode','city','country'),
+    'sylvainjule.locator.liststyle'    => 'columns',
+    'sylvainjule.locator.marker'       => 'dark',
+);
+```
+
+<br/>
+
+## 7. Front-end usage
+
+The location data is stored as YAML and therefore needs to be decoded with the `yaml` method:
+
+```php
+$location = $page->mymap()->yaml();
+```
+
+Potentially stored keys are:
+
+- `lat` (Latitude)
+- `lon` (Longitude)
+- `number` (Street number)
+- `address` (Street / road / place)
+- `city` (city / village)
+- `country` (country)
+
+
+It is possible that the found location doesn't have one of those keys, which will therefore not be saved. It is important to always check if the key exists, and if it's not empty. Here's one way to do it:
+
+```php
+$location = $page->mymap()->yaml();
+
+if(!empty($location['postcode'])) {
+    // there is a filled 'postcode' key
+}
+else {
+    // there is no / an empty 'postcode' key
+}
+```
+
+<br/>
+
+## 8. Credits
+
+**Services:**
+- [Openstreetmap](https://www.openstreetmap.org/#map=5/46.449/2.210), [Wikimedia](https://maps.wikimedia.org), [Carto](https://carto.com/) or [Mapbox](https://www.mapbox.com/) as tile servers.
+- [Nominatim](https://nominatim.openstreetmap.org/) or [Mapbox Search](https://www.mapbox.com/search/) as an geocoding API
+- [Leaflet](https://leafletjs.com/) as a mapping library.
+
+**K2 fields:**
+- [Map-field](https://github.com/AugustMiller/kirby-map-field) by [@AugustMiller](https://github.com/AugustMiller)
+- Its [open-source fork](https://github.com/fendinger/kirby-osmap-field) by [@fendinger](https://github.com/fendinger)
+
+<br/>
+
+## 9. License
+
+MIT

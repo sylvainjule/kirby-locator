@@ -1,0 +1,16 @@
+{
+    "name": "sylvainjule/locator",
+    "description": "A map & geolocation field, built on top of open-source services / Mapbox",
+    "version": "0.0.1",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "autoload": {
+        "files": ["config.php"]
+    },
+    "authors": [
+        {
+            "name": "Sylvain Julé",
+            "email": "contact@sylvain-jule.fr"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+/* Colors
+---------------------------------*/
+
+$color-white: #fff;
+$color-light: #efefef;
+$color-light-grey: #999;
+$color-dark: #16171a;
+$color-dark-grey: #777;
+$color-background: $color-light;
+$color-border: #ccc;
+$color-border-light: lighten($color-border, 12%);
+$color-focus: #4271ae;
+$color-focus-border: $color-focus;
+
+
+/* Font-sizes
+---------------------------------*/
+
+$font-size-tiny: 0.75rem;
+$font-size-small: 0.875rem;
+$font-size-medium: 1rem;

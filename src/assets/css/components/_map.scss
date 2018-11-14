@@ -1,0 +1,33 @@
+.leaflet-pane {
+	z-index: 1;
+}
+
+.leaflet-top, .leaflet-bottom {
+	z-index: 2;
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out { 
+	background: $color-dark !important; 
+	color: $color-white !important;
+	width: 35px !important;
+	height: 35px !important; 
+	&:hover {
+		background: lighten($color-dark, 8%) !important;
+	}
+}
+
+.leaflet-control-zoom-in { 
+	border-bottom: 1px solid lighten($color-dark, 25%) !important; 
+}
+
+.leaflet-control-attribution { 
+	background: lighten($color-background, 2%) !important;
+	color: lighten($color-dark, 40%) !important;
+	a {
+		color: $color-dark;
+	}
+}
+
+.leaflet-interactive {
+	stroke-width: 0;
+}

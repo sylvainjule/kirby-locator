@@ -50,13 +50,14 @@ mymap:
 
 #### 3.1. Open-source / free tiles
 
-![tiles-opensource](https://user-images.githubusercontent.com/14079751/48486345-8a7cdd00-e81b-11e8-99ce-ea40c76c87a7.jpg)
+![tiles-opensource-2](https://user-images.githubusercontent.com/14079751/48502223-4b608300-e83f-11e8-82a8-6bb51c739cd4.jpg)
 
 You can pick one of the 4 free tile servers included:
-- `wikimedia`, default ([Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))
-- `openstreetmap` ([Terms of Use](https://wiki.openstreetmap.org/wiki/Tile_usage_policy))
-- `positron` (Carto, [Terms of Use](https://carto.com/location-data-services/basemaps/))
-- `voyager` (Carto, [Terms of Use](https://carto.com/location-data-services/basemaps/))
+
+1. `wikimedia` (default, [Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))
+2. `openstreetmap` ([Terms of Use](https://wiki.openstreetmap.org/wiki/Tile_usage_policy))
+3. `positron` ([Terms of Use](https://carto.com/location-data-services/basemaps/))
+4. `voyager` ([Terms of Use](https://carto.com/location-data-services/basemaps/))
 
 ```yaml
 mymap:
@@ -74,11 +75,16 @@ return array(
 
 #### 3.2. Mapbox tiles
 
-![tiles-mapbox](https://user-images.githubusercontent.com/14079751/48486344-89e44680-e81b-11e8-81fc-4c78347eea35.jpg)
+![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48502222-4ac7ec80-e83f-11e8-8d00-043e8cae5d2b.jpg)
 
-In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles.
+1. `'mapbox.outdoors` (default mapbox theme)
+2. `'mapbox.streets`
+3. `'mapbox.light`
+4. `'mapbox.dark`
 
-Leaflet doesn't render vector-maps, therefore you will not be able to use custom-styles edited with Mapbox Studio. However, Mapbox privides a bunch of useful tile-layers: `mapbox.outdoors` (default), `mapbox.streets` and `mapbox.dark`. 
+In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles. 
+
+Leaflet doesn't render vector-maps, therefore you will not be able to use custom-styles edited with Mapbox Studio, only the public Mapbox tile-layers (listed above).
 
 You will have to set both the `id` of the tiles you want to use and your mapbox `public key` in your installation's main `config.php`:
 
@@ -245,7 +251,7 @@ The location data is stored as YAML and therefore needs to be decoded with the `
 $location = $page->mymap()->yaml();
 ```
 
-Potentially stored keys are:
+Potential stored keys are:
 
 - `lat` (Latitude)
 - `lon` (Longitude)

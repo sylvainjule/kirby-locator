@@ -77,10 +77,10 @@ return array(
 
 ![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48502222-4ac7ec80-e83f-11e8-8d00-043e8cae5d2b.jpg)
 
-1. `'mapbox.outdoors` (default mapbox theme)
-2. `'mapbox.streets`
-3. `'mapbox.light`
-4. `'mapbox.dark`
+1. `mapbox.outdoors` (default mapbox theme)
+2. `mapbox.streets`
+3. `mapbox.light`
+4. `mapbox.dark`
 
 In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles. 
 

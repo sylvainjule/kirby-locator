@@ -122,7 +122,6 @@
 					margin-bottom: 3px;
 					font-size: $font-size-tiny;
 					width: 115px;
-					margin-right: 10px;
 					&:after {
 						position: absolute;
 						content: " ";
@@ -132,6 +131,9 @@
 						width: 1px;
 						background: $color-border-light;
 					}
+				}
+				.value {
+					padding-left: 0.75rem;
 				}
 			}
 		}

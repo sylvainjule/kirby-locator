@@ -13,7 +13,9 @@
             </k-button-group>
         </k-dialog>
 
-        <div id="map" class="map"></div>
+        <div class="map-container">
+            <div id="map" class="map"></div>
+        </div>
 
         <div v-if="valueExists" :class="['content', liststyle]">
             <div v-if="value.lat && display.includes('lat')" class="content-block">

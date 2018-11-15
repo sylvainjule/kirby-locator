@@ -47,11 +47,17 @@
 	/* Map
 	----------------------------*/
 
-	.map {
+	.map-container {
 		position: relative;
-		width: 100%;
-		height: 50vh;
 		margin-top: 1rem;
+		padding-top: 65%;
+		.map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 

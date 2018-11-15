@@ -18,33 +18,9 @@
         </div>
 
         <div v-if="valueExists" :class="['content', liststyle]">
-            <div v-if="value.lat && display.includes('lat')" class="content-block">
-                <div class="title">{{ $t('locator.latitude') }}</div>
-                <div class="value">{{ value.lat }}</div>
-            </div>
-            <div v-if="value.lon && display.includes('lon')" class="content-block">
-                <div class="title">{{ $t('locator.longitude') }}</div>
-                <div class="value">{{ value.lon }}</div>
-            </div>
-            <div v-if="value.number && display.includes('number')" class="content-block">
-                <div class="title">{{ $t('locator.number') }}</div>
-                <div class="value">{{ value.number }}</div>
-            </div>
-            <div v-if="value.address && display.includes('address')" class="content-block">
-                <div class="title">{{ $t('locator.address') }}</div>
-                <div class="value">{{ value.address }}</div>
-            </div>
-            <div v-if="value.postcode && display.includes('postcode')" class="content-block">
-                <div class="title">{{ $t('locator.postcode') }}</div>
-                <div class="value">{{ value.postcode }}</div>
-            </div>
-            <div v-if="value.city && display.includes('city')" class="content-block">
-                <div class="title">{{ $t('locator.city') }}</div>
-                <div class="value">{{ value.city }}</div>
-            </div>
-            <div v-if="value.country && display.includes('country')" class="content-block">
-                <div class="title">{{ $t('locator.country') }}</div>
-                <div class="value">{{ value.country }}</div>
+            <div v-for="key in display" v-if="value[key]" class="content-block">
+                <div class="title">{{ translatedTitle(key) }}</div>
+                <div class="value">{{ value[key] }}</div>
             </div>
         </div>
         <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()"> 
@@ -145,6 +121,11 @@ export default {
         this.initMap()
     },
     methods: {
+        translatedTitle(key) {
+            key = key.replace('lon', 'longitude')
+            key = key.replace('lat', 'latitude')
+            return this.$t('locator.'+ key)
+        },
         initMap() {
             // init map
             this.map = L.map('map', {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.zoom.default)

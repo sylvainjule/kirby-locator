@@ -30,7 +30,7 @@
                 <div class="title">{{ $t('locator.number') }}</div>
                 <div class="value">{{ value.number }}</div>
             </div>
-            <div v-if="value.address && display.includes('addressdetails')" class="content-block">
+            <div v-if="value.address && display.includes('address')" class="content-block">
                 <div class="title">{{ $t('locator.address') }}</div>
                 <div class="value">{{ value.address }}</div>
             </div>

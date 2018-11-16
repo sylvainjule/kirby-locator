@@ -50,7 +50,7 @@ mymap:
 
 #### 3.1. Open-source / free tiles
 
-![tiles-opensource-2](https://user-images.githubusercontent.com/14079751/48502223-4b608300-e83f-11e8-82a8-6bb51c739cd4.jpg)
+![tiles-opensource-2](https://user-images.githubusercontent.com/14079751/48648038-2c542380-e9ee-11e8-8668-4170ef107195.jpg)
 
 You can pick one of the 4 free tile servers included:
 
@@ -75,7 +75,7 @@ return array(
 
 #### 3.2. Mapbox tiles
 
-![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48502222-4ac7ec80-e83f-11e8-8d00-043e8cae5d2b.jpg)
+![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48648037-2c542380-e9ee-11e8-916d-ca240a40bc20.jpg)
 
 1. `mapbox.outdoors` (default mapbox theme)
 2. `mapbox.streets`

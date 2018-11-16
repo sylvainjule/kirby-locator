@@ -44,16 +44,23 @@ export default {
     },
     props: {
         markerUrl: String,
-        label:     String,
-        name:      String,
         tiles:     String,
         center:    Object,
         zoom:      Object,
         mapbox:    Object,
-        value:     Object,
         display:   Array,
         geocoding: String,
         liststyle: String,
+
+        // general options
+        label:     String,
+        disabled:  Boolean,
+        help:      String,
+        parent:    String,
+        value:     Object,
+        name:      [String, Number],
+        required:  Boolean,
+        type:      String
     },
     computed: {
         icon() {

@@ -1,7 +1,6 @@
 {
     "name": "sylvainjule/locator",
     "description": "A map & geolocation field, built on top of open-source services / Mapbox",
-    "version": "1.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "autoload": {

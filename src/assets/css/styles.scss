@@ -1,5 +1,6 @@
 @import 
-    'abstracts/_variables.scss';
+    'abstracts/_variables.scss',
+    'abstracts/_mixins.scss';
 @import 
     'vendors/_leaflet.scss';
 @import 
@@ -51,6 +52,7 @@
 		position: relative;
 		margin-top: 1rem;
 		padding-top: 65%;
+		@include responsive-height;
 		.map {
 			position: absolute;
 			top: 0;
@@ -167,5 +169,43 @@
 	        line-height: 1.25rem;
 	        padding: .5rem .75rem;
 	    }
+	}
+}
+
+
+/* Columns adjustments
+----------------------------*/
+
+.k-sections > .k-column[data-width="1/1"] {
+	.k-locator-field {
+		.map-container {
+			padding-top: 35%;
+			@include responsive-height;
+		}
+	}
+}
+
+.k-sections > .k-column[data-width="3/4"] {
+	.k-locator-field {
+		.map-container {
+			padding-top: 45%;
+			@include responsive-height;
+		}
+	}
+}
+
+.k-sections > .k-column[data-width="2/3"] {
+	.k-locator-field {
+		.map-container {
+			padding-top: 50%;
+			@include responsive-height;
+		}
+	}
+}
+
+.k-sections > .k-column[data-width="1/3"],
+.k-sections > .k-column[data-width="1/4"] {
+	.leaflet-control-zoom-in, .leaflet-control-zoom-out { 
+		@include small-controls;
 	}
 }

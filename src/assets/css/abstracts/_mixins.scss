@@ -1,0 +1,18 @@
+@mixin small-controls {
+	width: 30px !important;
+	height: 30px !important; 
+	font-size: 16px !important;
+	line-height: 27px !important;
+}
+
+@mixin responsive-height {
+	@media screen and (max-width: $breakpoint-medium) {
+		padding-top: 50%;
+	}
+	@media screen and (max-width: $breakpoint-menu) {
+		padding-top: 55%;
+	}
+	@media screen and (max-width: $breakpoint-small) {
+		padding-top: 65%;
+	}
+}

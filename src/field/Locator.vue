@@ -14,7 +14,7 @@
         </k-dialog>
 
         <div class="map-container">
-            <div id="map" class="map"></div>
+            <div :id="mapId" class="map"></div>
         </div>
 
         <div v-if="valueExists" :class="['content', liststyle]">
@@ -63,6 +63,9 @@ export default {
         type:      String
     },
     computed: {
+        mapId() {
+            return 'map-'+ (Math.random() + Math.random()).toString(36).substr(2, 8)
+        },
         icon() {
             return L.icon({
                 iconUrl: this.markerUrl,
@@ -135,7 +138,7 @@ export default {
         },
         initMap() {
             // init map
-            this.map = L.map('map', {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.zoom.default)
+            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.zoom.default)
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})

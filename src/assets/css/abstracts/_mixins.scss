@@ -5,6 +5,12 @@
 	line-height: 27px !important;
 }
 
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @mixin responsive-height {
 	@media screen and (max-width: $breakpoint-medium) {
 		padding-top: 50%;

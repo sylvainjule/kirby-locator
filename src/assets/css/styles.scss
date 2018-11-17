@@ -15,6 +15,9 @@
 	.k-locator-input {
 		display: flex;
 		align-items: center;
+		.k-text-input {
+			@include text-truncate;
+		}
 		button {
 			display: block;
 			border: none;

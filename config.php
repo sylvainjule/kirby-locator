@@ -15,7 +15,8 @@ Kirby::plugin('sylvainjule/locator', array(
 		'liststyle'    => 'table',
 		'marker'       => 'dark',
 	),
-	'fields' => require_once __DIR__ . '/lib/fields.php',
+	'fields'       => require_once __DIR__ . '/lib/fields.php',
+	'fieldMethods' => require_once __DIR__ . '/lib/fieldMethods.php',
     'translations' => array(
         'de' => require_once __DIR__ . '/lib/languages/de.php',
         'en' => require_once __DIR__ . '/lib/languages/en.php',

@@ -245,7 +245,7 @@ return array(
 
 ## 7. Front-end usage
 
-The location data is stored as YAML and therefore needs to be decoded with the `yaml` method:
+The location data is stored as YAML and therefore needs to be decoded with the `yaml` method or using the `toLocation` method (see below):
 
 ```php
 $location = $page->mymap()->yaml();
@@ -271,6 +271,29 @@ if(!empty($location['postcode'])) {
 }
 else {
     // there is no / an empty 'postcode' key
+}
+```
+
+Alternatively, you can use the `toLocation` method to convert the value to a new collection, an use it kirby-style:
+
+```php
+$location = $page->mymap()->toLocation();
+
+// You now have access to
+// $location->lat()
+// $location->lon()
+// ...
+
+if($location->has('postcode')) {
+    if($location->postcode()->isNotEmpty()) {
+        // there is a filled 'postcode' key
+    }
+    else {
+        // there is an empty 'postcode' key
+    }
+}
+else {
+  // there is no 'postcode' key
 }
 ```
 

@@ -200,7 +200,7 @@ export default {
                 'lat': response.lat,
                 'lon': response.lon,
                 'number': response.address.house_number,
-                'city': response.address.city || response.address.town || response.address.village,
+                'city': response.address.city || response.address.town || response.address.village || response.address.county,
                 'country': response.address.country,
                 'postcode': response.address.postcode,
                 'address': response.address.road,

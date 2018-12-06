@@ -74,7 +74,7 @@ export default {
             })
         },
         valueExists() {
-            return Object.keys(this.value).length
+            return this.value ? Object.keys(this.value).length : false
         },
         defaultCoords() {
             return this.valueExists ? [this.value.lat, this.value.lon] : [this.center.lat, this.center.lon]
@@ -165,7 +165,10 @@ export default {
             this.marker = L.marker(this.coords, {icon: this.icon})
             this.map.addLayer(this.marker)
         },
-        getCoordinates() {
+        getCoordinates(e) {
+            e.preventDefault()
+            e.stopPropagation()
+
             if(this.geocoding && this.location.length) {
                 fetch(this.searchQuery)
                     .then(response => response.json())

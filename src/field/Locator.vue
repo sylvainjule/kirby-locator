@@ -51,6 +51,7 @@ export default {
         display:   Array,
         geocoding: String,
         liststyle: String,
+        draggable: Boolean,
 
         // general options
         label:     String,
@@ -162,8 +163,26 @@ export default {
         },
         setMarker() {
             if(this.marker) this.map.removeLayer(this.marker)
-            this.marker = L.marker(this.coords, {icon: this.icon})
+            this.marker = L.marker(this.coords, {
+                icon: this.icon, 
+                draggable: this.draggable,
+                autoPan: this.draggable,
+            })
             this.map.addLayer(this.marker)
+
+            this.marker.on('dragend', e => {
+                let position = this.marker.getLatLng()
+                this.value = {
+                    'lat': position.lat,
+                    'lon': position.lng,
+                    'number': null,
+                    'city': null,
+                    'country': null,
+                    'postcode': null,
+                    'address': null,
+                }
+                this.$emit("input", this.value)
+            })
         },
         getCoordinates(e) {
             e.preventDefault()
@@ -220,7 +239,7 @@ export default {
                 'postcode': response.context.find(el => el.id.startsWith('postcode')) ? response.context.find(el => el.id.startsWith('postcode')).text : '',
                 'address':  response.text || '',
             }
-        }
+        },
     },
 }
 </script>

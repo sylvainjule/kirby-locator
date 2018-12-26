@@ -17,6 +17,9 @@ return array(
             'display' => function($display = null) {
             	return $display ?? option('sylvainjule.locator.display');
             },
+            'draggable' => function($draggable = null) {
+            	return $draggable ?? option('sylvainjule.locator.draggable');
+            },
             'zoom' => function($zoom = []) {
             	return array(
             		'min'     => $zoom['min']     ?? option('sylvainjule.locator.zoom.min'),

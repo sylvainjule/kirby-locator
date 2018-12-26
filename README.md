@@ -199,7 +199,11 @@ mymap:
     - country
 ```
 
-#### 5.4. `liststyle`
+#### 5.4. `draggable`
+
+If set to `true`, the marker will be repositionable in case search result isn't precise enough. After being moved, only the new `lat` and `lng` will be stored. Default is `true`.
+
+#### 5.5. `liststyle`
 
 ![liststyle](https://user-images.githubusercontent.com/14079751/48487819-9cf91580-e81f-11e8-8e20-eba57f122261.jpg)
 
@@ -212,7 +216,7 @@ mymap:
 ```
 
 
-#### 5.5. `marker`
+#### 5.6. `marker`
 
 The color of the marker used, either `dark` or `light` (in case you are using `mapbox.dark` as your tile-layer). Default is `dark`.
 
@@ -236,6 +240,7 @@ return array(
     'sylvainjule.locator.zoom.default' => 12,
     'sylvainjule.locator.zoom.max'     => 18,
     'sylvainjule.locator.display'      => array('lat','lon','number','address','postcode','city','country'),
+    'sylvainjule.locator.draggable'    => true,
     'sylvainjule.locator.liststyle'    => 'columns',
     'sylvainjule.locator.marker'       => 'dark',
 );

@@ -13,8 +13,11 @@
 	----------------------------*/
 
 	.k-locator-input {
+		position: relative;
 		display: flex;
 		align-items: center;
+		overflow: visible;
+		z-index: 3;
 		.k-text-input {
 			@include text-truncate;
 		}
@@ -43,6 +46,20 @@
 				svg {
 					fill: darken($color-background, 12%);
 				}
+			}
+		}
+		.k-dropdown-content {
+			max-width: 100%;
+			overflow: hidden;
+			.k-location-type {
+				color: #999;
+    			margin-left: .25rem;
+    			&:before {
+    				content: " (";
+    			}
+    			&:after {
+    				content: ")";
+    			}
 			}
 		}
 	}

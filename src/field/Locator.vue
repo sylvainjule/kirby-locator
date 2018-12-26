@@ -1,8 +1,18 @@
 <template>
     <k-field :input="_uid" v-bind="$props" class="k-locator-field">
         <div class="k-input k-locator-input" data-theme="field">
-            <input ref="input" v-model="location" class="k-text-input" :placeholder="$t('locator.placeholder')">
+            <input ref="input" v-model="location" class="k-text-input" :placeholder="$t('locator.placeholder')" @input="onLocationInput">
             <button :class="[{disabled: !location.length}]" @click="getCoordinates"><svg><use xlink:href="#icon-locator-locate" /></svg> {{ $t('locator.locate') }}</button>
+            <k-dropdown-content v-if="autocomplete" ref="dropdown">
+                <k-dropdown-item v-for="(option, index) in dropdownOptions" 
+                                 :key="index"
+                                 @click="select(option)"
+                                 @keydown.native.enter.prevent="select(option)"
+                                 @keydown.native.space.prevent="select(option)">
+                    <span v-html="option.name" />
+                    <span class="k-location-type" v-html="option.type" />
+                </k-dropdown-item>
+            </k-dropdown-content>
         </div>
         <k-dialog ref="dialog" @close="error = ''">
             <k-text>{{ error }}</k-text>
@@ -40,6 +50,8 @@ export default {
             tileLayer: null,
             location: '',
             error: '',
+            limit: 1,
+            dropdownOptions: [],
         }
     },
     props: {
@@ -52,6 +64,7 @@ export default {
         geocoding: String,
         liststyle: String,
         draggable: Boolean,
+        autocomplete: Boolean,
 
         // general options
         label:     String,
@@ -118,10 +131,10 @@ export default {
                 return 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=' + this.location
             }
             else if(this.geocoding == 'mapbox') {
-                return 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+ this.location +'.json?types=address,country,postcode,place,locality&limit=1&access_token=' + this.mapbox.token
+                return 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+ this.location +'.json?types=address,country,postcode,place,locality&limit='+ this.limit +'&access_token=' + this.mapbox.token
             }
             else return ''
-        }
+        },
     },
     watch: {
         value() {
@@ -132,6 +145,47 @@ export default {
         this.initMap()
     },
     methods: {
+        onLocationInput() {
+            if(!this.autocomplete) return false
+
+            if(this.geocoding && this.location.length) {
+                if(this.geocoding != 'mapbox') return false
+
+                this.limit = 5
+                fetch(this.searchQuery)
+                    .then(response => response.json())
+                    .then(response => {
+                        // if places are found
+                        if(response.features.length) {
+                            // keep the relevant ones
+                            let suggestions = response.features.filter(el => el.relevance == 1)
+                            // make them the dropdown options
+                            this.dropdownOptions = suggestions.map(el => {
+                                return {
+                                    name: el.place_name, 
+                                    type: this.capitalize(el.place_type[0]),
+                                }
+                            })
+                            this.$refs.dropdown.open()
+                        }
+                        else {
+                            this.$refs.dropdown.close()
+                        }
+                    })
+                    .catch(error => {
+                        this.error = this.$t('locator.error')
+                        this.$refs.dialog.open()
+                        this.$refs.dropdown.close()
+                    })
+            }
+            else {
+                this.$refs.dropdown.close()
+            }
+        },
+        select(option) {
+            this.location = option.name
+            this.getCoordinates()
+        },
         translatedTitle(key) {
             key = key.replace('lon', 'longitude')
             key = key.replace('lat', 'latitude')
@@ -185,8 +239,13 @@ export default {
             })
         },
         getCoordinates(e) {
-            e.preventDefault()
-            e.stopPropagation()
+            if(e) {
+                e.preventDefault()
+                e.stopPropagation()
+            }
+
+            if(this.$refs.dropdown) this.$refs.dropdown.close()
+            this.limit = 1
 
             if(this.geocoding && this.location.length) {
                 fetch(this.searchQuery)
@@ -199,7 +258,6 @@ export default {
                             else if(this.geocoding == 'mapbox')  {
                                 this.setMapboxResponse(response)
                             }
-
                             this.location = ''
                         }
                         else {
@@ -240,6 +298,9 @@ export default {
                 'address':  response.text || '',
             }
         },
+        capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
     },
 }
 </script>

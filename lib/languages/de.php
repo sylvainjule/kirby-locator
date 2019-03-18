@@ -3,6 +3,7 @@
 return array(
 	'locator.placeholder'    => 'Einen Standort suchen',
 	'locator.locate'         => 'Orten',
+	'locator.collapse'       => 'Zusammenklappen',
 	'locator.latitude'       => 'Breitengrad',
 	'locator.longitude'      => 'Längengrad',
 	'locator.number'         => 'Hausnummer',

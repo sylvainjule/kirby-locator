@@ -39,9 +39,6 @@ return array(
             'value' => function($value = null) {
             	return Yaml::decode($value);
             },
-            'toggle' => function($toggle = true) {
-            	return $toggle;
-            }
 		),
 		'computed' => array(
 			'markerUrl' => function() {

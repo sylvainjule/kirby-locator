@@ -3,6 +3,7 @@
 return array(
 	'locator.placeholder'    => 'Saisissez une adresse ou le nom d’un lieu',
 	'locator.locate'         => 'Localiser',
+	'locator.collapse'       => 'Réduire',
 	'locator.latitude'       => 'Latitude',
 	'locator.longitude'      => 'Longitude',
 	'locator.number'         => 'Numéro',

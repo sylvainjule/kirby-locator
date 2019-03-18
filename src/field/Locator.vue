@@ -1,5 +1,14 @@
 <template>
-    <k-field :input="_uid" v-bind="$props" class="k-locator-field">
+    <k-field :input="_uid" v-bind="$props" :class="['k-locator-field', {filled: valueExists}, status]">
+        <!-- Edit button -->
+        <template slot="options">
+            <k-button v-if="valueExists && filledStatus == 'closed'" :id="_uid" icon="edit" @click="toggle('open')">
+                {{ $t('edit') }}
+            </k-button>
+            <k-button v-else-if="valueExists && filledStatus == 'open'" :id="_uid" icon="collapse" @click="toggle('closed')">
+                {{ $t('locator.collapse') }}
+            </k-button>
+        </template>
         <div class="k-input k-locator-input" data-theme="field">
             <input ref="input" v-model="location" class="k-text-input" :placeholder="$t('locator.placeholder')" @input="onLocationInput">
             <button :class="[{disabled: !location.length}]" @click="getCoordinates"><svg><use xlink:href="#icon-locator-locate" /></svg> {{ $t('locator.locate') }}</button>
@@ -23,19 +32,21 @@
             </k-button-group>
         </k-dialog>
 
-        <div class="map-container">
-            <div :id="mapId" class="map"></div>
-        </div>
-
-        <div v-if="valueExists" :class="['content', liststyle]">
-            <div v-for="key in display" v-if="value[key]" class="content-block">
-                <div class="title">{{ translatedTitle(key) }}</div>
-                <div class="value">{{ value[key] }}</div>
+        <div class="k-locator-container">
+            <div class="map-container">
+                <div :id="mapId" class="map"></div>
             </div>
+            
+            <div v-if="valueExists" :class="['content', liststyle]">
+                <div v-for="key in display" v-if="value[key]" class="content-block">
+                    <div class="title">{{ translatedTitle(key) }}</div>
+                    <div class="value">{{ value[key] }}</div>
+                </div>
+            </div>
+            <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()"> 
+                {{ $t('locator.empty') }}
+            </k-empty>
         </div>
-        <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()"> 
-            {{ $t('locator.empty') }}
-        </k-empty>
     </k-field>
 </template>
 
@@ -52,6 +63,8 @@ export default {
             error: '',
             limit: 1,
             dropdownOptions: [],
+            filledStatus: 'closed',
+            dragged: false
         }
     },
     props: {
@@ -78,7 +91,7 @@ export default {
     },
     computed: {
         mapId() {
-            return 'map-'+ (Math.random() + Math.random()).toString(36).substr(2, 8)
+            return 'map-'+ this._uid
         },
         icon() {
             return L.icon({
@@ -89,6 +102,9 @@ export default {
         },
         valueExists() {
             return this.value ? Object.keys(this.value).length : false
+        },
+        status() {
+            return this.valueExists ? this.filledStatus : ''
         },
         defaultCoords() {
             return this.valueExists ? [this.value.lat, this.value.lon] : [this.center.lat, this.center.lon]
@@ -191,6 +207,13 @@ export default {
             key = key.replace('lat', 'latitude')
             return this.$t('locator.'+ key)
         },
+        toggle(arg) {
+            this.filledStatus = arg
+            this.$nextTick(() => {
+                this.map.invalidateSize()
+                this.map.setView(this.coords, this.zoom.default)
+            })
+        },
         initMap() {
             // init map
             this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.zoom.default)
@@ -204,14 +227,35 @@ export default {
         },
         updateMap() {
             if(this.map) {
-                if(this.valueExists) this.map.panTo(this.coords)
-                
+                // If a marker already exists
                 if(this.marker) {
-                    if(this.valueExists) this.marker.setLatLng(this.coords)
-                    else                 this.map.removeLayer(this.marker)
+                    if(this.valueExists) {
+                        this.marker.setLatLng(this.coords)
+                        if(!this.dragged) this.toggle('closed')
+                    }
+                    else {
+                        this.map.removeLayer(this.marker)
+                        this.marker = null
+                    }
                 }
+
+                // If a marker should be created
                 else if(!this.marker && this.valueExists) {
                     this.setMarker()
+                    if(!this.dragged) this.toggle('closed')
+                }
+
+                // If there is a filled value
+                if(this.valueExists) {
+                    this.map.panTo(this.coords)
+                }
+
+                // If there is no filled value, reset default view
+                else {            
+                    this.$nextTick(() => {
+                        this.map.invalidateSize()
+                        this.map.setView(this.defaultCoords, this.zoom.default)
+                    })
                 }
             }
         },
@@ -226,6 +270,8 @@ export default {
 
             this.marker.on('dragend', e => {
                 let position = this.marker.getLatLng()
+                let _this    = this
+
                 this.value = {
                     'lat': position.lat,
                     'lon': position.lng,
@@ -236,6 +282,10 @@ export default {
                     'address': null,
                 }
                 this.$emit("input", this.value)
+                this.dragged = true
+                setTimeout(() => {
+                    _this.dragged = false
+                }, 500)
             })
         },
         getCoordinates(e) {

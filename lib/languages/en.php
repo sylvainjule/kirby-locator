@@ -3,6 +3,7 @@
 return array(
 	'locator.placeholder'    => 'Search for a location',
 	'locator.locate'         => 'Locate',
+	'locator.collapse'       => 'Collapse',
 	'locator.latitude'       => 'Latitude',
 	'locator.longitude'      => 'Longitude',
 	'locator.number'         => 'Number',

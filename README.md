@@ -216,12 +216,12 @@ If set to `true`, **when Mapbox is used for geocoding**, you will be presented u
 
 ![liststyle](https://user-images.githubusercontent.com/14079751/48487819-9cf91580-e81f-11e8-8e20-eba57f122261.jpg)
 
-The style of the informations block, either `columns` or `table`. Default is `columns`.
+The style of the informations block, either `columns` or `table`. Default is `table`.
 
 ```yaml
 mymap:
   type: locator
-  liststyle: columns
+  liststyle: table
 ```
 
 

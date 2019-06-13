@@ -11,9 +11,9 @@
         </template>
         <div class="k-input k-locator-input" data-theme="field">
             <input ref="input" v-model="location" class="k-text-input" :placeholder="$t('locator.placeholder')" @input="onLocationInput">
-            <button :class="[{disabled: !location.length}]" @click="getCoordinates"><svg><use xlink:href="#icon-locator-locate" /></svg> {{ $t('locator.locate') }}</button>
+            <button :class="[{disabled: !location.length}]" @click="getCoordinates"><svg><use href="#icon-locator-locate" /></svg> {{ $t('locator.locate') }}</button>
             <k-dropdown-content v-if="autocomplete" ref="dropdown">
-                <k-dropdown-item v-for="(option, index) in dropdownOptions" 
+                <k-dropdown-item v-for="(option, index) in dropdownOptions"
                                  :key="index"
                                  @click="select(option)"
                                  @keydown.native.enter.prevent="select(option)"
@@ -36,14 +36,14 @@
             <div class="map-container">
                 <div :id="mapId" class="map"></div>
             </div>
-            
+
             <div v-if="valueExists" :class="['content', liststyle]">
                 <div v-for="key in display" v-if="value[key]" class="content-block">
                     <div class="title">{{ translatedTitle(key) }}</div>
                     <div class="value">{{ value[key] }}</div>
                 </div>
             </div>
-            <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()"> 
+            <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()">
                 {{ $t('locator.empty') }}
             </k-empty>
         </div>
@@ -178,7 +178,7 @@ export default {
                             // make them the dropdown options
                             this.dropdownOptions = suggestions.map(el => {
                                 return {
-                                    name: el.place_name, 
+                                    name: el.place_name,
                                     type: this.capitalize(el.place_type[0]),
                                 }
                             })
@@ -251,7 +251,7 @@ export default {
                 }
 
                 // If there is no filled value, reset default view
-                else {            
+                else {
                     this.$nextTick(() => {
                         this.map.invalidateSize()
                         this.map.setView(this.defaultCoords, this.zoom.default)
@@ -262,7 +262,7 @@ export default {
         setMarker() {
             if(this.marker) this.map.removeLayer(this.marker)
             this.marker = L.marker(this.coords, {
-                icon: this.icon, 
+                icon: this.icon,
                 draggable: this.draggable,
                 autoPan: this.draggable,
             })

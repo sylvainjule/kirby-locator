@@ -330,8 +330,8 @@ export default {
         setNominatimResponse(response) {
             response = response[0]
             this.value = {
-                'lat': response.lat,
-                'lon': response.lon,
+                'lat': parseFloat(response.lat),
+                'lon': parseFloat(response.lon),
                 'number': response.address.house_number,
                 'city': response.address.city || response.address.town || response.address.village || response.address.county,
                 'country': response.address.country,
@@ -343,8 +343,8 @@ export default {
         setMapboxResponse(response) {
             response = response.features[0]
             this.value = {
-                'lat':      response.center[1],
-                'lon':      response.center[0],
+                'lat':      parseFloat(response.center[1]),
+                'lon':      parseFloat(response.center[0]),
                 'number':   response.address || '',
                 'city':     response.context.find(el => el.id.startsWith('place'))    ? response.context.find(el => el.id.startsWith('place')).text    : '',
                 'country':  response.context.find(el => el.id.startsWith('country'))  ? response.context.find(el => el.id.startsWith('country')).text  : '',

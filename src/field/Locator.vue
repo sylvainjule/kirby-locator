@@ -109,6 +109,9 @@ export default {
         defaultCoords() {
             return this.valueExists ? [this.value.lat, this.value.lon] : [this.center.lat, this.center.lon]
         },
+        defaultZoom() {
+            return this.valueExists && this.value.zoom ? this.value.zoom : this.zoom.default
+        },
         coords() {
             return this.valueExists ? [this.value.lat, this.value.lon] : []
         },
@@ -211,12 +214,12 @@ export default {
             this.filledStatus = arg
             this.$nextTick(() => {
                 this.map.invalidateSize()
-                this.map.setView(this.coords, this.zoom.default)
+                this.map.setView(this.coords, this.defaultZoom)
             })
         },
         initMap() {
             // init map
-            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.zoom.default)
+            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.defaultZoom)
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})
@@ -254,7 +257,7 @@ export default {
                 else {
                     this.$nextTick(() => {
                         this.map.invalidateSize()
-                        this.map.setView(this.defaultCoords, this.zoom.default)
+                        this.map.setView(this.defaultCoords, this.defaultZoom)
                     })
                 }
             }
@@ -334,6 +337,7 @@ export default {
                 'country': response.address.country,
                 'postcode': response.address.postcode,
                 'address': response.address.road,
+                'zoom': this.map.getZoom()
             }
         },
         setMapboxResponse(response) {
@@ -346,13 +350,14 @@ export default {
                 'country':  response.context.find(el => el.id.startsWith('country'))  ? response.context.find(el => el.id.startsWith('country')).text  : '',
                 'postcode': response.context.find(el => el.id.startsWith('postcode')) ? response.context.find(el => el.id.startsWith('postcode')).text : '',
                 'address':  response.text || '',
+                'zoom': this.map.getZoom()
             }
         },
         capitalize(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
     },
-}
+};
 </script>
 
 <style lang="scss">

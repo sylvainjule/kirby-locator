@@ -333,7 +333,7 @@ export default {
                 'lat': parseFloat(response.lat),
                 'lon': parseFloat(response.lon),
                 'number': response.address.house_number,
-                'city': response.address.city || response.address.town || response.address.village || response.address.county,
+                'city': response.address.city || response.address.town || response.address.village || response.address.county || response.address.state,
                 'country': response.address.country,
                 'postcode': response.address.postcode,
                 'address': response.address.road,

@@ -220,6 +220,8 @@ export default {
             this.$nextTick(() => {
                 this.map.invalidateSize()
                 this.map.setView(this.coords, this.defaultZoom)
+                if(arg == 'closed' && this.marker) this.disableMapEvents()
+                else if(arg == 'open' && this.marker) this.enableMapEvents()
             })
         },
         initMap() {
@@ -289,6 +291,7 @@ export default {
                 autoPan: this.draggable,
             })
             this.map.addLayer(this.marker)
+            if(this.filledStatus == 'closed') this.disableMapEvents()
 
             this.marker.on('dragend', e => {
                 let position = this.marker.getLatLng()
@@ -392,6 +395,30 @@ export default {
         },
         capitalize(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+        disableMapEvents() {
+            if(this.map) {
+                this.map.scrollWheelZoom.disable()
+                this.map.dragging.disable()
+                this.map.touchZoom.disable()
+                this.map.doubleClickZoom.disable()
+                this.map.boxZoom.disable()
+                this.map.keyboard.disable()
+                if (this.map.tap) this.map.tap.disable()
+            }
+            if(this.marker) this.marker.dragging.disable()
+        },
+        enableMapEvents() {
+            if(this.map) {
+                this.map.scrollWheelZoom.enable()
+                this.map.dragging.enable()
+                this.map.touchZoom.enable()
+                this.map.doubleClickZoom.enable()
+                this.map.boxZoom.enable()
+                this.map.keyboard.enable()
+                if (this.map.tap) this.map.tap.enable()
+            }
+            if(this.marker) this.marker.dragging.enable()
         }
     },
 };

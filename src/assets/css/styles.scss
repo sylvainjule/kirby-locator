@@ -1,9 +1,9 @@
-@import 
+@import
     'abstracts/_variables.scss',
     'abstracts/_mixins.scss';
-@import 
+@import
     'vendors/_leaflet.scss';
-@import 
+@import
     'components/_map.scss';
 
 
@@ -102,7 +102,7 @@
 				width: 50%;
 				padding: 0.75rem 0;
 				border-bottom: 1px solid lighten($color-border-light, 2%);
-				
+
 				// no border on the nth-last(2) only if it's an odd number,
 				// in case there's only one block in the last row
 				&:nth-last-child(2):nth-child(odd),
@@ -210,10 +210,14 @@
 			width: 200px;
 			padding-top: 0;
 			margin-top: 0;
+            pointer-events: none;
 			.leaflet-bottom.leaflet-right,
 			.leaflet-top.leaflet-left {
 				display: none;
 			}
+            .leaflet-marker-icon {
+                cursor: default;
+            }
 		}
 	}
 }
@@ -270,7 +274,7 @@
 			}
 		}
 	}
-	.leaflet-control-zoom-in, .leaflet-control-zoom-out { 
+	.leaflet-control-zoom-in, .leaflet-control-zoom-out {
 		@include small-controls;
 	}
 }

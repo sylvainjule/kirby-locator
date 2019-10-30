@@ -119,6 +119,9 @@ export default {
             if(this.tiles == 'mapbox') {
                 return 'https://api.tiles.mapbox.com/v4/'+ this.mapbox.id +'/{z}/{x}/{y}'+ (L.Browser.retina ? '@2x.png' : '.png') +'?access_token='+ this.mapbox.token
             }
+            else if(this.tiles == 'mapbox.custom') {
+                return 'https://api.mapbox.com/styles/v1/'+ this.mapbox.id +'/tiles/256/{z}/{x}/{y}'+ (L.Browser.retina ? '@2x' : '') +'?access_token='+ this.mapbox.token
+            }
             else if(this.tiles == 'wikimedia') {
                 return 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}' + (L.Browser.retina ? '@2x.png' : '.png')
             }
@@ -131,7 +134,7 @@ export default {
             else return ''
         },
         attribution() {
-            if(this.tiles == 'mapbox') {
+            if(this.tiles == 'mapbox' || this.tiles == 'mapbox.custom') {
                 return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             }
             else if(this.tiles == 'wikimedia') {

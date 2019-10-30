@@ -236,7 +236,7 @@ export default {
                 this.$emit("input", this.value)
                 this.dragged = true
                 setTimeout(() => {
-                    _this.dragged = false
+                    this.dragged = false
                 }, 500)
             });
         },

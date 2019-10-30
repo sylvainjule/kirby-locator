@@ -227,6 +227,18 @@ export default {
 
             // create a marker
             if(this.coords.length) this.setMarker()
+
+            this.map.on('zoomend', () => {
+                this.value = {
+                    ...this.value,
+                    zoom: this.map.getZoom()
+                }
+                this.$emit("input", this.value)
+                this.dragged = true
+                setTimeout(() => {
+                    this.dragged = false
+                }, 500)
+            });
         },
         updateMap() {
             if(this.map) {
@@ -283,6 +295,7 @@ export default {
                     'country': null,
                     'postcode': null,
                     'address': null,
+                    'zoom': this.map.getZoom()
                 }
                 this.$emit("input", this.value)
                 this.dragged = true

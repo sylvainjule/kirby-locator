@@ -68,15 +68,17 @@ export default {
         }
     },
     props: {
-        markerUrl: String,
-        tiles:     String,
-        center:    Object,
-        zoom:      Object,
-        mapbox:    Object,
-        display:   Array,
-        geocoding: String,
-        liststyle: String,
-        draggable: Boolean,
+        markerUrl:    String,
+        tiles:        String,
+        center:       Object,
+        zoom:         Object,
+        saveZoom:     Boolean,
+        autoSaveZoom: Boolean,
+        mapbox:       Object,
+        display:      Array,
+        geocoding:    String,
+        liststyle:    String,
+        draggable:    Boolean,
         autocomplete: Boolean,
 
         // general options
@@ -231,17 +233,19 @@ export default {
             // create a marker
             if(this.coords.length) this.setMarker()
 
-            this.map.on('zoomend', () => {
-                this.value = {
-                    ...this.value,
-                    zoom: this.map.getZoom()
-                }
-                this.$emit("input", this.value)
-                this.dragged = true
-                setTimeout(() => {
-                    this.dragged = false
-                }, 500)
-            });
+            if (this.saveZoom && this.autoSaveZoom) {
+                this.map.on('zoomend', () => {
+                    this.value = {
+                        ...this.value,
+                        'zoom': this.map.getZoom()
+                    }
+                    this.$emit("input", this.value)
+                    this.dragged = true
+                    setTimeout(() => {
+                        this.dragged = false
+                    }, 500)
+                });
+            }
         },
         updateMap() {
             if(this.map) {
@@ -298,8 +302,15 @@ export default {
                     'country': null,
                     'postcode': null,
                     'address': null,
-                    'zoom': this.map.getZoom()
                 }
+
+                if(this.saveZoom) {
+                    this.value = {
+                        ...this.value,
+                        'zoom': this.map.getZoom()
+                    }
+                }
+
                 this.$emit("input", this.value)
                 this.dragged = true
                 setTimeout(() => {
@@ -352,8 +363,13 @@ export default {
                 'city': response.address.city || response.address.town || response.address.village || response.address.county || response.address.state,
                 'country': response.address.country,
                 'postcode': response.address.postcode,
-                'address': response.address.road,
-                'zoom': this.map.getZoom()
+                'address': response.address.road
+            }
+            if(this.saveZoom) {
+                this.value = {
+                    ...this.value,
+                    'zoom': this.map.getZoom()
+                }
             }
         },
         setMapboxResponse(response) {
@@ -365,8 +381,13 @@ export default {
                 'city':     response.context.find(el => el.id.startsWith('place'))    ? response.context.find(el => el.id.startsWith('place')).text    : '',
                 'country':  response.context.find(el => el.id.startsWith('country'))  ? response.context.find(el => el.id.startsWith('country')).text  : '',
                 'postcode': response.context.find(el => el.id.startsWith('postcode')) ? response.context.find(el => el.id.startsWith('postcode')).text : '',
-                'address':  response.text || '',
-                'zoom': this.map.getZoom()
+                'address':  response.text || ''
+            }
+            if(this.saveZoom) {
+                this.value = {
+                    ...this.value,
+                    'zoom': this.map.getZoom()
+                }
             }
         },
         capitalize(str) {

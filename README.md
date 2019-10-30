@@ -1,6 +1,6 @@
 # Kirby Locator
 
-A simple map & geolocation field, built on top of open-source services and Mapbox. 
+A simple map & geolocation field, built on top of open-source services and Mapbox.
 
 ![screenshot](https://user-images.githubusercontent.com/14079751/48486342-89e44680-e81b-11e8-93fb-c3eadd7fbb61.jpg)
 
@@ -36,7 +36,7 @@ Alternatively, you can install it with composer: ```composer require sylvainjule
 
 ## 2. Setup
 
-Out of the box, the field is set to use open-source services both for geocoding (Nominatim) and tiles-rendering (Wikimedia), without any API-key requirements. 
+Out of the box, the field is set to use open-source services both for geocoding (Nominatim) and tiles-rendering (Wikimedia), without any API-key requirements.
 
 Keep in mind that **these services are bound by strict usage policies**, always double-check if your usage is compatible. Otherwise, please set-up the field to use Mapbox, see details below.
 
@@ -84,7 +84,7 @@ return array(
 3. `mapbox.light`
 4. `mapbox.dark`
 
-In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles. 
+In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles.
 
 Leaflet doesn't render vector-maps, therefore you will not be able to use custom-styles edited with Mapbox Studio, only the public Mapbox tile-layers (listed above).
 
@@ -184,7 +184,27 @@ mymap:
     max: 18
 ```
 
-#### 5.3. `display`
+#### 5.3. `saveZoom`
+
+Whether the field should store the zoom level of the map when the marker was added, and use it as default zoom value afterwards. Default is `false`.
+
+```yaml
+mymap:
+  type: locator
+  saveZoom: false
+```
+
+#### 5.4. `autoSaveZoom`
+
+Whether the field should store the zoom level of the map when the user changes the zoom manually, and use it as default zoom value afterwards. Default is `false`.
+
+```yaml
+mymap:
+  type: locator
+  autoSaveZoom: false
+```
+
+#### 5.5. `display`
 
 The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city` and `country`. Default includes them all.
 
@@ -202,17 +222,17 @@ mymap:
 ```
 
 
-#### 5.4. `draggable`
+#### 5.6. `draggable`
 
 If set to `true`, the marker will be repositionable in case search result isn't precise enough. After being moved, only the new `lat` and `lng` will be stored. Default is `true`.
 
 
-#### 5.5. `autocomplete`
+#### 5.7. `autocomplete`
 
 If set to `true`, **when Mapbox is used for geocoding**, you will be presented up to 5 suggestions while typing your request. Default is `true`.
 
 
-#### 5.6. `liststyle`
+#### 5.8. `liststyle`
 
 ![liststyle](https://user-images.githubusercontent.com/14079751/48487819-9cf91580-e81f-11e8-8e20-eba57f122261.jpg)
 
@@ -225,7 +245,7 @@ mymap:
 ```
 
 
-#### 5.7. `marker`
+#### 5.9. `marker`
 
 The color of the marker used, either `dark` or `light` (in case you are using `mapbox.dark` as your tile-layer). Default is `dark`.
 
@@ -241,13 +261,15 @@ mymap:
 
 The same options are available globally, which means you can set them all in your installation's `config.php` file and don't worry about setting it up individually afterwards:
 
-```php 
+```php
 return array(
     'sylvainjule.locator.center.lat'   => 48.864716,
     'sylvainjule.locator.center.lon'   => 2.349014,
     'sylvainjule.locator.zoom.min'     => 2,
     'sylvainjule.locator.zoom.default' => 12,
     'sylvainjule.locator.zoom.max'     => 18,
+    'sylvainjule.locator.saveZoom'     => false,
+    'sylvainjule.locator.autoSaveZoom' => false,
     'sylvainjule.locator.display'      => array('lat','lon','number','address','postcode','city','country'),
     'sylvainjule.locator.draggable'    => true,
     'sylvainjule.locator.autocomplete' => true,

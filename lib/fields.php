@@ -30,6 +30,12 @@ return array(
             		'max'     => $zoom['max']     ?? option('sylvainjule.locator.zoom.max'),
             	);
             },
+            'saveZoom' => function($saveZoom = null) {
+                return $saveZoom ?? option('sylvainjule.locator.saveZoom');
+            },
+            'autoSaveZoom' => function($autoSaveZoom = null) {
+                return $autoSaveZoom ?? option('sylvainjule.locator.autoSaveZoom');
+            },
             'center' => function($center = []) {
             	return array(
             		'lat'     => $center['lat'] ?? option('sylvainjule.locator.center.lat'),

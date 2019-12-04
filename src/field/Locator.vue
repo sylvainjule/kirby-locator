@@ -418,7 +418,7 @@ export default {
                 this.map.keyboard.enable()
                 if (this.map.tap) this.map.tap.enable()
             }
-            if(this.marker) this.marker.dragging.enable()
+            if(this.marker && this.draggable) this.marker.dragging.enable()
         }
     },
 };

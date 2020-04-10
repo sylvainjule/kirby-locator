@@ -36,6 +36,9 @@ return array(
             'autoSaveZoom' => function($autoSaveZoom = null) {
                 return $autoSaveZoom ?? option('sylvainjule.locator.autoSaveZoom');
             },
+            'language' => function($language = null) {
+                return $language ?? option('sylvainjule.locator.language');
+            },
             'center' => function($center = []) {
             	return array(
             		'lat'     => $center['lat'] ?? option('sylvainjule.locator.center.lat'),

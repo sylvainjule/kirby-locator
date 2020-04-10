@@ -81,8 +81,10 @@ export default {
         display:      Array,
         geocoding:    String,
         liststyle:    String,
+        liststyle:    String,
         draggable:    Boolean,
         autocomplete: Boolean,
+        language:     [String, Boolean],
 
         // general options
         label:     String,
@@ -155,10 +157,12 @@ export default {
         },
         searchQuery() {
             if(this.geocoding == 'nominatim') {
-                return 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=' + this.location
+                let languageParam = this.language ? '&accept-language=' + this.language : ''
+                return 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=' + this.location + languageParam
             }
             else if(this.geocoding == 'mapbox') {
-                return 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+ this.location +'.json?types=address,country,postcode,place,locality&limit='+ this.limit +'&access_token=' + this.mapbox.token
+                let languageParam = this.language ? '&language=' + this.language : ''
+                return 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+ this.location +'.json?types=address,country,postcode,place,locality&limit='+ this.limit +'&access_token=' + this.mapbox.token + languageParam
             }
             else return ''
         },

@@ -18,6 +18,7 @@ Kirby::plugin('sylvainjule/locator', array(
 		'marker'       => 'dark',
         'saveZoom'     => false,
         'autoSaveZoom' => false,
+        'language'     => false,
 	),
 	'fields'       => require_once __DIR__ . '/lib/fields.php',
 	'fieldMethods' => require_once __DIR__ . '/lib/fieldMethods.php',

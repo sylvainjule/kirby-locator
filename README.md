@@ -255,6 +255,16 @@ mymap:
   marker: dark
 ```
 
+#### 5.10. `language`
+
+If this options is set with an [ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (en, fr, de, etc.), the geocoding service will return results in the requested language if available. Default is `false`.
+
+```yaml
+mymap:
+  type: locator
+  language: false # or 'de' | 'fr' | 'en' |  ⃨
+```
+
 <br/>
 
 ## 6. Global options
@@ -275,6 +285,7 @@ return array(
     'sylvainjule.locator.autocomplete' => true,
     'sylvainjule.locator.liststyle'    => 'columns',
     'sylvainjule.locator.marker'       => 'dark',
+    'sylvainjule.locator.language'     => false,
 );
 ```
 

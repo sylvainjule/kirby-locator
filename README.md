@@ -262,7 +262,7 @@ If this options is set with an [ISO 639-1 code](https://en.wikipedia.org/wiki/Li
 ```yaml
 mymap:
   type: locator
-  language: false # or 'de' | 'fr' | 'en' |  ⃨
+  language: false # or 'de' | 'fr' | 'en' | …
 ```
 
 <br/>

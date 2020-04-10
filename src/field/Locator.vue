@@ -5,7 +5,10 @@
             <k-button v-if="valueExists && filledStatus == 'closed'" :id="_uid" icon="edit" @click="toggle('open')">
                 {{ $t('edit') }}
             </k-button>
-            <k-button v-else-if="valueExists && filledStatus == 'open'" :id="_uid" icon="collapse" @click="toggle('closed')">
+            <k-button v-if="valueExists && filledStatus == 'open'" :id="_uid" icon="trash" @click="resetValue">
+                {{ $t('locator.reset') }}
+            </k-button>
+            <k-button v-if="valueExists && filledStatus == 'open'" :id="_uid" icon="collapse" @click="toggle('closed')">
                 {{ $t('locator.collapse') }}
             </k-button>
         </template>
@@ -419,6 +422,10 @@ export default {
                 if (this.map.tap) this.map.tap.enable()
             }
             if(this.marker && this.draggable) this.marker.dragging.enable()
+        },
+        resetValue() {
+            this.value = {}
+            this.$emit("input", this.value)
         }
     },
 };

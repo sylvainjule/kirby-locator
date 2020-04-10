@@ -14,4 +14,5 @@ return array(
 	'locator.empty'          => 'There is no location to display.',
 	'locator.empty_response' => 'We couldn’t find the location. Please add more details to your request.',
 	'locator.error'          => 'Something went wrong. Try again or contact your administator.',
+    'locator.reset'          => 'Reset',
 );

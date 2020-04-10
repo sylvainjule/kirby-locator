@@ -14,4 +14,5 @@ return array(
 	'locator.empty'          => 'Il n’y a pas de coordonnées à afficher.',
 	'locator.empty_response' => 'Nous n’avons pas réussi à trouver le lieu. Essayez de compléter votre requête.',
 	'locator.error'          => 'Une erreur s’est produite. Réessayez ou contactez l’administrateur du site.',
+    'locator.reset'          => 'Vider',
 );

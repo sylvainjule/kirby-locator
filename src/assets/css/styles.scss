@@ -9,6 +9,13 @@
 
 .k-locator-field {
 
+
+    .k-field-header {
+        .k-button + .k-button {
+            margin-left: 1.5rem;
+        }
+    }
+
 	/* Input
 	----------------------------*/
 
@@ -194,9 +201,6 @@
 	        padding: .5rem .75rem;
 	    }
 	}
-    .k-button + .k-button {
-        margin-left: 1.5rem;
-    }
 
 
 	/* Filled

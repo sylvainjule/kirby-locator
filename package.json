@@ -22,6 +22,10 @@
     "cssnano": "^4.1.10",
     "leaflet": "^1.5.1",
     "sass": "^1.21.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-hot-reload-api": "^2.3.4"
   }
 }

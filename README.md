@@ -36,7 +36,7 @@ Alternatively, you can install it with composer: ```composer require sylvainjule
 
 ## 2. Setup
 
-Out of the box, the field is set to use open-source services both for geocoding (Nominatim) and tiles-rendering (Wikimedia), without any API-key requirements.
+Out of the box, the field is set to use open-source services both for geocoding (Nominatim) and tiles-rendering (Positron), without any API-key requirements.
 
 Keep in mind that **these services are bound by strict usage policies**, always double-check if your usage is compatible. Otherwise, please set-up the field to use Mapbox, see details below.
 
@@ -64,14 +64,14 @@ You can pick one of the 4 free tile servers included:
 ```yaml
 mymap:
   type: locator
-  tiles: wikimedia
+  tiles: positron
 ```
 
 You can also set this globally in your installation's main `config.php`, then you won't have to configure it in every blueprint:
 
 ```php
 return array(
-    'sylvainjule.locator.tiles' => 'wikimedia',
+    'sylvainjule.locator.tiles' => 'positron',
 );
 ```
 

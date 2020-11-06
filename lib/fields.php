@@ -55,8 +55,18 @@ return array(
 				return kirby()->url('media') . '/plugins/sylvainjule/locator/images/marker-icon-'. $tint .'.png';
 			},
 			'mapbox' => function() {
+                $idSwap = [
+                    'mapbox.outdoors' => 'mapbox/outdoors-v11',
+                    'mapbox.streets'  => 'mapbox/streets-v11',
+                    'mapbox.light'    => 'mapbox/light-v10',
+                    'mapbox.dark'     => 'mapbox/dark-v10',
+                ];
+
+                $setId = option('sylvainjule.locator.mapbox.id');
+                $id    = array_key_exists($setId, $idSwap) ? $idSwap[$setId] : $setId;
+
 				return array(
-					'id'    => option('sylvainjule.locator.mapbox.id'),
+					'id'    => $id,
                 	'token' => option('sylvainjule.locator.mapbox.token', ''),
 				);
 			}

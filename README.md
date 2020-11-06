@@ -79,10 +79,10 @@ return array(
 
 ![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48648037-2c542380-e9ee-11e8-916d-ca240a40bc20.jpg)
 
-1. `mapbox.outdoors` (default mapbox theme)
-2. `mapbox.streets`
-3. `mapbox.light`
-4. `mapbox.dark`
+1. ~~mapbox.outdoors~~ → `mapbox/outdoors-v11` (default mapbox theme)
+2. ~~mapbox.streets~~ → `mapbox/streets-v11`
+3. ~~mapbox.light~~ → `mapbox/light-v10`
+4. ~~mapbox.dark~~ → `mapbox/dark-v10`
 
 In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles.
 
@@ -92,7 +92,7 @@ You will have to set both the `id` of the tiles you want to use and your mapbox 
 
 ```php
 return array(
-    'sylvainjule.locator.mapbox.id'    => 'mapbox.outdoors',
+    'sylvainjule.locator.mapbox.id'    => 'mapbox/outdoors-v11',
     'sylvainjule.locator.mapbox.token' => 'pk.vdf561vf8...',
 );
 ```

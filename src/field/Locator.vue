@@ -123,10 +123,7 @@ export default {
             return this.valueExists ? [this.value.lat, this.value.lon] : []
         },
         tileUrl() {
-            if(this.tiles == 'mapbox') {
-                return 'https://api.tiles.mapbox.com/v4/'+ this.mapbox.id +'/{z}/{x}/{y}'+ (L.Browser.retina ? '@2x.png' : '.png') +'?access_token='+ this.mapbox.token
-            }
-            else if(this.tiles == 'mapbox.custom') {
+            if(this.tiles == 'mapbox' || this.tiles == 'mapbox.custom') {
                 return 'https://api.mapbox.com/styles/v1/'+ this.mapbox.id +'/tiles/256/{z}/{x}/{y}'+ (L.Browser.retina ? '@2x' : '') +'?access_token='+ this.mapbox.token
             }
             else if(this.tiles == 'wikimedia') {

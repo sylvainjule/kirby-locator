@@ -18,14 +18,14 @@
     "not ie <= 11"
   ],
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.0.0",
+    "@vue/component-compiler-utils": "^3.2.0",
     "cssnano": "^4.1.10",
-    "leaflet": "^1.5.1",
-    "sass": "^1.21.0",
-    "vue-template-compiler": "^2.6.11"
+    "leaflet": "^1.7.1",
+    "sass": "^1.29.0",
+    "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   }
 }

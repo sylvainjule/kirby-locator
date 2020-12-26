@@ -58,8 +58,8 @@ You can pick one of the 4 free tile servers included:
 
 1. `wikimedia` ([Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))
 2. `openstreetmap` ([Terms of Use](https://wiki.openstreetmap.org/wiki/Tile_usage_policy))
-3. `positron` (default, [Terms of Use](https://carto.com/location-data-services/basemaps/))
-4. `voyager` ([Terms of Use](https://carto.com/location-data-services/basemaps/))
+3. `positron` (default, [Terms of Use](https://carto.com/legal/) [Under *Free Basemaps Terms of Service*])
+4. `voyager` ([Terms of Use](https://carto.com/legal/) [Under *Free Basemaps Terms of Service*])
 
 ```yaml
 mymap:

@@ -1,0 +1,23 @@
+$color-light: #efefef;
+$color-background: $color-light;
+$color-border: #ccc;
+$box-shadow-card: rgba($color-dark, 0.05) 0 2px 5px;
+
+.k-locator-field-preview {
+    padding: 0 .75rem;
+    .locator-preview,  {
+        display: flex;
+        figcaption {
+            box-shadow: $box-shadow-card;
+            background: $color-background;
+            line-height: 1.5em;
+            padding: 0 .5rem;
+            border: 1px solid $color-border;
+            border-left: 0;
+            border-radius: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

@@ -4,11 +4,11 @@
 @import
     'vendors/_leaflet.scss';
 @import
+    'components/_preview.scss',
     'components/_map.scss';
 
 
 .k-locator-field {
-
 
     .k-field-header {
         .k-button + .k-button {

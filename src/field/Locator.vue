@@ -108,7 +108,7 @@ export default {
             })
         },
         valueExists() {
-            return this.value ? Object.keys(this.value).length : false
+            return this.value && (Object.keys(this.value).length > 1 || Object.keys(this.value).length == 1 && !this.value.zoom) ? Object.keys(this.value).length : false
         },
         status() {
             return this.valueExists ? this.filledStatus : ''
@@ -230,7 +230,8 @@ export default {
         },
         initMap() {
             // init map
-            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, this.defaultZoom)
+            let zoom = this.value ? this.value.zoom || this.defaultZoom : this.defaultZoom
+            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, zoom)
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})
@@ -245,6 +246,7 @@ export default {
                         ...this.value,
                         'zoom': this.map.getZoom()
                     }
+                    console.log(this.value)
                     this.$emit("input", this.value)
                     this.dragged = true
                     setTimeout(() => {
@@ -282,7 +284,8 @@ export default {
                 else {
                     this.$nextTick(() => {
                         this.map.invalidateSize()
-                        this.map.setView(this.defaultCoords, this.defaultZoom)
+                        let zoom = this.value ? this.value.zoom || this.defaultZoom : this.defaultZoom
+                        this.map.setView(this.defaultCoords, zoom)
                     })
                 }
             }

@@ -305,8 +305,8 @@ export default {
                 let _this    = this
 
                 this.value = {
-                    'lat': position.lat,
-                    'lon': position.lng,
+                    'lat': parseFloat(position.lat),
+                    'lon': parseFloat(position.lng),
                     'number': null,
                     'city': null,
                     'country': null,

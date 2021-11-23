@@ -36,17 +36,17 @@
         </k-dialog>
 
         <div class="k-locator-container">
-            <div class="map-container">
+            <div :class="['map-container', {'map-only': !display}]">
                 <div :id="mapId" class="map"></div>
             </div>
 
-            <div v-if="valueExists" :class="['content', liststyle]">
+            <div v-if="valueExists && display" :class="['content', liststyle]">
                 <div v-for="key in display" v-if="value[key]" class="content-block">
                     <div class="title">{{ translatedTitle(key) }}</div>
                     <div class="value">{{ value[key] }}</div>
                 </div>
             </div>
-            <k-empty v-else icon="search" class="k-locator-empty" @click="$refs.input.focus()">
+            <k-empty v-else-if="!valueExists" icon="search" class="k-locator-empty" @click="$refs.input.focus()">
                 {{ $t('locator.empty') }}
             </k-empty>
         </div>
@@ -78,7 +78,7 @@ export default {
         saveZoom:     Boolean,
         autoSaveZoom: Boolean,
         mapbox:       Object,
-        display:      Array,
+        display:      [Array, Boolean],
         geocoding:    String,
         liststyle:    String,
         liststyle:    String,

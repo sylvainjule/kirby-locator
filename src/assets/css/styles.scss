@@ -92,6 +92,13 @@
 			@include responsive-height;
 		}
 	}
+    &.closed {
+        .map-container.map-only {
+            width: 100%;
+            padding-top: 35%;
+            @include responsive-height;
+        }
+    }
 
 
 	/* Content
@@ -214,8 +221,6 @@
 			display: none;
 		}
 		.map-container {
-			width: 200px;
-			padding-top: 0;
 			margin-top: 0;
             pointer-events: none;
 			.leaflet-bottom.leaflet-right,
@@ -224,6 +229,11 @@
 			}
             .leaflet-marker-icon {
                 cursor: default;
+            }
+
+            &:not(.map-only) {
+                padding-top: 0;
+                width: 200px;
             }
 		}
 	}

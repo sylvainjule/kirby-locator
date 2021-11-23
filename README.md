@@ -210,6 +210,8 @@ The informations to be displayed in the panel. Note that it will only hide them 
 
 If you are using Nominatim, the field also stores the OpenStreetMap ID under the `osm`  key, which you can also display by adding it to the list.
 
+If you don't want any information to show up, set it to `false`.
+
 ```yaml
 mymap:
   type: locator

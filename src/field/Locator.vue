@@ -309,6 +309,7 @@ export default {
                     'lon': parseFloat(position.lng),
                     'number': null,
                     'city': null,
+                    'region': null,
                     'country': null,
                     'postcode': null,
                     'address': null,
@@ -367,11 +368,13 @@ export default {
         },
         setNominatimResponse(response) {
             response = response[0]
+            console.log(response)
             this.value = {
                 'lat': parseFloat(response.lat),
                 'lon': parseFloat(response.lon),
                 'number': response.address.house_number,
                 'city': response.address.city || response.address.town || response.address.village || response.address.county || response.address.state,
+                'region': response.address.state,
                 'country': response.address.country,
                 'postcode': response.address.postcode,
                 'address': response.address.road,
@@ -386,11 +389,13 @@ export default {
         },
         setMapboxResponse(response) {
             response = response.features[0]
+            console.log(response)
             this.value = {
                 'lat':      parseFloat(response.center[1]),
                 'lon':      parseFloat(response.center[0]),
                 'number':   response.address || '',
                 'city':     response.context.find(el => el.id.startsWith('place'))    ? response.context.find(el => el.id.startsWith('place')).text    : '',
+                'region':   response.context.find(el => el.id.startsWith('region'))    ? response.context.find(el => el.id.startsWith('region')).text    : '',
                 'country':  response.context.find(el => el.id.startsWith('country'))  ? response.context.find(el => el.id.startsWith('country')).text  : '',
                 'postcode': response.context.find(el => el.id.startsWith('postcode')) ? response.context.find(el => el.id.startsWith('postcode')).text : '',
                 'address':  response.text || ''

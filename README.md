@@ -206,7 +206,9 @@ mymap:
 
 #### 5.5. `display`
 
-The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city` and `country`. Default includes them all.
+The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city`, `region` and `country`. Default includes them all.
+
+If you are using Nominatim, the field also stores the OpenStreetMap ID under the `osm`  key, which you can also display by adding it to the list.
 
 ```yaml
 mymap:
@@ -218,6 +220,7 @@ mymap:
     - address
     - postcode
     - city
+    - region
     - country
 ```
 
@@ -306,7 +309,9 @@ Potential stored keys are:
 - `number` (Street number)
 - `address` (Street / road / place)
 - `city` (city / village)
+- `region` (region / state)
 - `country` (country)
+- `osm` (OpenStreetMap ID, if using Nominatim)
 
 
 It is possible that the found location doesn't have one of those keys, which will therefore not be saved. It is important to always check if the key exists, and if it's not empty. Here's one way to do it:

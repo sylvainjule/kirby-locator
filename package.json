@@ -6,26 +6,18 @@
   "author": "Sylvain Julé",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel watch src/index.js --no-source-maps -d ./",
-    "build": "parcel build src/index.js --no-source-maps --experimental-scope-hoisting -d ./"
+    "dev": "kirbyup src/index.js --watch",
+    "build": "kirbyup src/index.js",
+    "lint": "eslint \"src/**/*.{js,vue}\"",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"src/**/*.{css,js,vue}\""
   },
-  "posthtml": {
-    "recognizeSelfClosing": true
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 11"
-  ],
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.2.0",
-    "cssnano": "^4.1.10",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "kirbyup": "^0.21.0",
     "leaflet": "^1.7.1",
-    "sass": "^1.29.0",
-    "vue-template-compiler": "^2.6.12"
-  },
-  "dependencies": {
-    "vue": "^2.6.12",
-    "vue-hot-reload-api": "^2.3.4"
+    "prettier": "^2.4.1"
   }
 }

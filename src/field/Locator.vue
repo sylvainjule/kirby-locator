@@ -312,6 +312,7 @@ export default {
                     'country': null,
                     'postcode': null,
                     'address': null,
+                    'osm': null,
                 }
 
                 if(this.saveZoom) {
@@ -373,7 +374,8 @@ export default {
                 'city': response.address.city || response.address.town || response.address.village || response.address.county || response.address.state,
                 'country': response.address.country,
                 'postcode': response.address.postcode,
-                'address': response.address.road
+                'address': response.address.road,
+                'osm': response.osm_id
             }
             if(this.saveZoom) {
                 this.value = {

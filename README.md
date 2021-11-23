@@ -40,6 +40,8 @@ Out of the box, the field is set to use open-source services both for geocoding 
 
 Keep in mind that **these services are bound by strict usage policies**, always double-check if your usage is compatible. Otherwise, please set-up the field to use Mapbox, see details below.
 
+You can also directly enter latitude / longitude coordinates and bypass the geolocation (in a format such as: `15.23456, -30.67890`).
+
 ```yaml
 mymap:
   label: Location

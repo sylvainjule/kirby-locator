@@ -246,7 +246,7 @@ export default {
                         ...this.value,
                         'zoom': this.map.getZoom()
                     }
-                    console.log(this.value)
+
                     this.$emit("input", this.value)
                     this.dragged = true
                     setTimeout(() => {
@@ -339,6 +339,11 @@ export default {
             if(this.$refs.dropdown) this.$refs.dropdown.close()
             this.limit = 1
 
+            if(this.isLatLon(this.location)) {
+                this.setCoordinates(this.location)
+                return true
+            }
+
             if(this.geocoding && this.location.length) {
                 fetch(this.searchQuery)
                     .then(response => response.json())
@@ -366,9 +371,40 @@ export default {
                     })
             }
         },
+        isLatLon(str) {
+            const regexExp = /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
+            return regexExp.test(str);
+        },
+        setCoordinates(str) {
+            let arr = str.split(',')
+            let lat = arr[0].replace(' ', '')
+            let lon = arr[1].replace(' ', '')
+
+            this.value = {
+                'lat': parseFloat(lat),
+                'lon': parseFloat(lon),
+                'number': null,
+                'city': null,
+                'region': null,
+                'country': null,
+                'postcode': null,
+                'address': null,
+                'osm': null,
+            }
+
+            if(this.saveZoom) {
+                this.value = {
+                    ...this.value,
+                    'zoom': this.map.getZoom()
+                }
+            }
+
+            this.location = ''
+            this.$emit("input", this.value)
+        },
         setNominatimResponse(response) {
             response = response[0]
-            console.log(response)
+
             this.value = {
                 'lat': parseFloat(response.lat),
                 'lon': parseFloat(response.lon),
@@ -389,7 +425,7 @@ export default {
         },
         setMapboxResponse(response) {
             response = response.features[0]
-            console.log(response)
+
             this.value = {
                 'lat':      parseFloat(response.center[1]),
                 'lon':      parseFloat(response.center[0]),

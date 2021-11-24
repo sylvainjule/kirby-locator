@@ -264,12 +264,22 @@ mymap:
 
 #### 5.10. `language`
 
-If this options is set with an [ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (en, fr, de, etc.), the geocoding service will return results in the requested language if available. Default is `false`.
+If this option is set with an [ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (en, fr, de, etc.), the geocoding service will return results in the requested language if available. Default is `false`.
 
 ```yaml
 mymap:
   type: locator
   language: false # or 'de' | 'fr' | 'en' | …
+```
+
+#### 5.11. `dblclick`
+
+Whether a double click on the map should trigger a zoom (`zoom`) or add a marker / move the existing marker to the coordinates of the click event (`marker`). Default is `zoom`.
+
+```yaml
+mymap:
+  type: locator
+  dblclick: zoom # or 'marker'
 ```
 
 <br/>
@@ -293,6 +303,7 @@ return array(
     'sylvainjule.locator.liststyle'    => 'columns',
     'sylvainjule.locator.marker'       => 'dark',
     'sylvainjule.locator.language'     => false,
+    'sylvainjule.locator.dblclick'     => 'zoom',
 );
 ```
 

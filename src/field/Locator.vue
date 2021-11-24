@@ -85,6 +85,7 @@ export default {
         draggable:    Boolean,
         autocomplete: Boolean,
         language:     [String, Boolean],
+        dblclick:     String,
 
         // general options
         label:     String,
@@ -231,7 +232,11 @@ export default {
         initMap() {
             // init map
             let zoom = this.value ? this.value.zoom || this.defaultZoom : this.defaultZoom
-            this.map = L.map(this.mapId, {minZoom: this.zoom.min, maxZoom: this.zoom.max}).setView(this.defaultCoords, zoom)
+
+            this.map = L.map(this.mapId, {
+                minZoom: this.zoom.min,
+                maxZoom: this.zoom.max,
+            }).setView(this.defaultCoords, zoom)
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})
@@ -253,6 +258,13 @@ export default {
                         this.dragged = false
                     }, 500)
                 });
+            }
+
+            if(this.dblclick == 'marker') {
+                this.map.doubleClickZoom.disable()
+                this.map.on('dblclick', (e) => {
+                    this.setCoordinates(e.latlng.lat + ',' + e.latlng.lng)
+                })
             }
         },
         updateMap() {
@@ -376,9 +388,10 @@ export default {
             return regexExp.test(str);
         },
         setCoordinates(str) {
-            let arr = str.split(',')
-            let lat = arr[0].replace(' ', '')
-            let lon = arr[1].replace(' ', '')
+            let arr   = str.split(',')
+            let lat   = arr[0].replace(' ', '')
+            let lon   = arr[1].replace(' ', '')
+            let _this = this
 
             this.value = {
                 'lat': parseFloat(lat),
@@ -401,6 +414,10 @@ export default {
 
             this.location = ''
             this.$emit("input", this.value)
+            this.dragged = true
+            setTimeout(() => {
+                _this.dragged = false
+            }, 500)
         },
         setNominatimResponse(response) {
             response = response[0]
@@ -463,7 +480,7 @@ export default {
                 this.map.scrollWheelZoom.enable()
                 this.map.dragging.enable()
                 this.map.touchZoom.enable()
-                this.map.doubleClickZoom.enable()
+                if(this.dblclick != 'marker') this.map.doubleClickZoom.enable()
                 this.map.boxZoom.enable()
                 this.map.keyboard.enable()
                 if (this.map.tap) this.map.tap.enable()

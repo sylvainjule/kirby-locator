@@ -39,6 +39,9 @@ return array(
             'language' => function($language = null) {
                 return $language ?? option('sylvainjule.locator.language');
             },
+            'dblclick' => function($dblclick = null) {
+                return $dblclick ?? option('sylvainjule.locator.dblclick');
+            },
             'center' => function($center = []) {
             	return array(
             		'lat'     => $center['lat'] ?? option('sylvainjule.locator.center.lat'),

@@ -240,6 +240,12 @@ export default {
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})
+
+            // add event listeners to override the panel's referrerpolicy while loading tiles
+            this.tileLayer.on('loading', () => document.querySelector("meta[name=referrer]").content = "strict-origin-when-cross-origin" );
+            this.tileLayer.on('load', () => document.querySelector("meta[name=referrer]").content = "same-origin" );
+
+            // add the tile layer to the map
             this.map.addLayer(this.tileLayer)
 
             // create a marker

@@ -180,8 +180,10 @@ export default {
             if(this.geocoding && this.location.length) {
                 if(this.geocoding != 'mapbox') return false
 
+                const fetchInit = { referrerPolicy: 'strict-origin-when-cross-origin' }
+
                 this.limit = 5
-                fetch(this.searchQuery)
+                fetch(this.searchQuery, fetchInit)
                     .then(response => response.json())
                     .then(response => {
                         // if places are found
@@ -240,6 +242,15 @@ export default {
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {attribution: this.attribution})
+
+            
+            // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API
+            if(this.tiles == 'mapbox' || this.tiles == 'mapbox.custom') {
+                this.tileLayer.on('loading', () => document.querySelector("meta[name=referrer]").content = "strict-origin-when-cross-origin")
+                this.tileLayer.on('load', () => document.querySelector("meta[name=referrer]").content = "same-origin")
+            }
+
+            // add the tile layer to the map
             this.map.addLayer(this.tileLayer)
 
             // create a marker
@@ -357,7 +368,9 @@ export default {
             }
 
             if(this.geocoding && this.location.length) {
-                fetch(this.searchQuery)
+                const fetchInit = this.geocoding == 'mapbox' ? { referrerPolicy: 'strict-origin-when-cross-origin' } : {}
+                
+                fetch(this.searchQuery, fetchInit)
                     .then(response => response.json())
                     .then(response => {
                         if(response.length || Object.keys(response).length) {

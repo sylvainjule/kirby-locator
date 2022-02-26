@@ -254,7 +254,7 @@ mymap:
 
 #### 5.9. `marker`
 
-The color of the marker used, either `dark` or `light` (in case you are using `mapbox.dark` as your tile-layer). Default is `dark`.
+The color of the marker used, either `dark`, `light` or your own HEX value. Default is `dark`.
 
 ```yaml
 mymap:

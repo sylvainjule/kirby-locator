@@ -53,9 +53,8 @@ return array(
             },
 		),
 		'computed' => array(
-			'markerUrl' => function() {
-				$tint = in_array($this->marker, ['light', 'dark']) ? $this->marker : option('sylvainjule.locator.marker');
-				return kirby()->url('media') . '/plugins/sylvainjule/locator/images/marker-icon-'. $tint .'.png';
+			'markerColor' => function() {
+				return $this->marker ?? option('sylvainjule.locator.marker');
 			},
 			'mapbox' => function() {
                 $idSwap = [

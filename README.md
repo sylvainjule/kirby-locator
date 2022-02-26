@@ -88,8 +88,6 @@ return array(
 
 In case your usage doesn't fall into the above policies (or if you don't want to rely on those services), you can set-up the field to use Mapbox' tiles.
 
-Leaflet doesn't render vector-maps, therefore you will not be able to use custom-styles edited with Mapbox Studio, only the public Mapbox tile-layers (listed above).
-
 You will have to set both the `id` of the tiles you want to use and your mapbox `public key` in your installation's main `config.php`:
 
 ```php

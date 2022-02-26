@@ -58,7 +58,7 @@ mymap:
 
 You can pick one of the 4 free tile servers included:
 
-1. `wikimedia` ([Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))
+1. ~~`wikimedia` ([Terms of Use](https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use))~~ → Public usage is now forbidden
 2. `openstreetmap` ([Terms of Use](https://wiki.openstreetmap.org/wiki/Tile_usage_policy))
 3. `positron` (default, [Terms of Use](https://carto.com/legal/) [Under *Free Basemaps Terms of Service*])
 4. `voyager` ([Terms of Use](https://carto.com/legal/) [Under *Free Basemaps Terms of Service*])
@@ -371,7 +371,7 @@ else {
 
 **Services:**
 - [Openstreetmap](https://www.openstreetmap.org/#map=5/46.449/2.210), [Wikimedia](https://maps.wikimedia.org), [Carto](https://carto.com/) or [Mapbox](https://www.mapbox.com/) as tile servers.
-- [Nominatim](https://nominatim.openstreetmap.org/) or [Mapbox Search](https://www.mapbox.com/search/) as an geocoding API
+- [Nominatim](https://nominatim.openstreetmap.org/) or [Mapbox Search](https://www.mapbox.com/search/) as a geocoding API
 - [Leaflet](https://leafletjs.com/) as a mapping library.
 
 **K2 fields:**

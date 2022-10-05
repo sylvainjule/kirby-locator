@@ -340,6 +340,7 @@ export default {
                     'city': null,
                     'region': null,
                     'country': null,
+                    'country_code': null,
                     'postcode': null,
                     'address': null,
                     'osm': null,
@@ -419,6 +420,7 @@ export default {
                 'city': null,
                 'region': null,
                 'country': null,
+                'country_code': null,
                 'postcode': null,
                 'address': null,
                 'osm': null,
@@ -448,6 +450,7 @@ export default {
                 'city': response.address.city || response.address.town || response.address.village || response.address.county || response.address.state,
                 'region': response.address.state,
                 'country': response.address.country,
+                'country_code': response.address?.country_code,
                 'postcode': response.address.postcode,
                 'address': response.address.road,
                 'osm': response.osm_id
@@ -468,7 +471,8 @@ export default {
                 'number':   response.address || '',
                 'city':     response.context.find(el => el.id.startsWith('place'))    ? response.context.find(el => el.id.startsWith('place')).text    : '',
                 'region':   response.context.find(el => el.id.startsWith('region'))    ? response.context.find(el => el.id.startsWith('region')).text    : '',
-                'country':  response.context.find(el => el.id.startsWith('country'))  ? response.context.find(el => el.id.startsWith('country')).text  : '',
+                'country': response.context.find(el => el.id.startsWith('country')) ? response.context.find(el => el.id.startsWith('country')).text : '',
+                'country_code': response.context.find(el => el.id.startsWith('country')) ? response.context.find(el => el.id.startsWith('country'))?.short_code : '',
                 'postcode': response.context.find(el => el.id.startsWith('postcode')) ? response.context.find(el => el.id.startsWith('postcode')).text : '',
                 'address':  response.text || ''
             }

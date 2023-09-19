@@ -26,13 +26,8 @@
                 </k-dropdown-item>
             </k-dropdown-content>
         </div>
-        <k-dialog ref="dialog" @close="error = ''">
+        <k-dialog ref="dialog" @close="error = ''" :cancelButton="false">
             <k-text>{{ error }}</k-text>
-            <k-button-group slot="footer">
-                <k-button icon="check" @click="$refs.dialog.close()">
-                    {{ $t("confirm") }}
-                </k-button>
-            </k-button-group>
         </k-dialog>
 
         <div class="k-locator-container">

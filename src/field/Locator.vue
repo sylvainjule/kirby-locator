@@ -550,7 +550,9 @@ export default {
                 country: response.address.country,
                 countryCode: response.address?.country_code,
                 postcode: response.address.postcode,
-                address: response.address.road,
+                address: 
+                    response.address.road ||
+                    response.address.square,
                 osm: response.osm_id,
             };
             if (this.saveZoom) {

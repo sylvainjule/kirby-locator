@@ -28,5 +28,6 @@ Kirby::plugin('sylvainjule/locator', array(
         'en' => require_once __DIR__ . '/lib/languages/en.php',
         'fr' => require_once __DIR__ . '/lib/languages/fr.php',
         'pl' => require_once __DIR__ . '/lib/languages/pl.php',
+        'tr' => require_once __DIR__ . '/lib/languages/tr.php',
     ),
 ));

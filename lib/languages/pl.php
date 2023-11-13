@@ -11,7 +11,7 @@ return array(
 	'locator.postcode'       => 'Kod pocztowy',
 	'locator.city'           => 'Miasto',
     'locator.region'         => 'Region',
-	'locator.country'        => 'Państwo',
+	'locator.country'        => 'Państwo (kod)',
     'locator.osm'            => 'OSM ID',
 	'locator.empty'          => 'Brak lokalizacji do wyświetlenia.',
 	'locator.empty_response' => 'Nie znaleziono miejsca. Spróbuj użyć innych danych w polu wyszukiwania.',

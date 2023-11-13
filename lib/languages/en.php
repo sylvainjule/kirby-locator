@@ -12,6 +12,7 @@ return array(
 	'locator.city'           => 'City',
     'locator.region'         => 'Region',
 	'locator.country'        => 'Country',
+	'locator.countryCode'    => 'Country code',
     'locator.osm'            => 'OSM ID',
 	'locator.empty'          => 'There is no location to display.',
 	'locator.empty_response' => 'We couldn’t find the location. Please add more details to your request.',

@@ -431,7 +431,7 @@ export default {
                     city: null,
                     region: null,
                     country: null,
-                    country_code: null,
+                    countryCode: null,
                     postcode: null,
                     address: null,
                     osm: null,
@@ -513,7 +513,7 @@ export default {
                 city: null,
                 region: null,
                 country: null,
-                country_code: null,
+                countryCode: null,
                 postcode: null,
                 address: null,
                 osm: null,
@@ -548,7 +548,7 @@ export default {
                     response.address.state,
                 region: response.address.state,
                 country: response.address.country,
-                country_code: response.address?.country_code,
+                countryCode: response.address?.country_code,
                 postcode: response.address.postcode,
                 address: response.address.road,
                 osm: response.osm_id,
@@ -583,7 +583,7 @@ export default {
                     ? response.context.find((el) => el.id.startsWith("country"))
                           .text
                     : "",
-                country_code: response.context.find((el) =>
+                countryCode: response.context.find((el) =>
                     el.id.startsWith("country")
                 )
                     ? response.context.find((el) => el.id.startsWith("country"))

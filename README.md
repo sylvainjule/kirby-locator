@@ -206,7 +206,7 @@ mymap:
 
 #### 5.5. `display`
 
-The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city`, `region` and `country`. Default includes them all.
+The informations to be displayed in the panel. Note that it will only hide them from the panel view, they will still be stored (if available) in the .txt file. To be picked from `lat`, `lon`, `number`, `address`, `postcode`, `city`, `region`, `country` and `countryCode`. Default includes them all but `countryCode`.
 
 If you are using Nominatim, the field also stores the OpenStreetMap ID under the `osm`  key, which you can also display by adding it to the list.
 
@@ -224,6 +224,7 @@ mymap:
     - city
     - region
     - country
+    - countryCode
 ```
 
 
@@ -324,6 +325,7 @@ Potential stored keys are:
 - `city` (city / village)
 - `region` (region / state)
 - `country` (country)
+- `countryCode` (country code)
 - `osm` (OpenStreetMap ID, if using Nominatim)
 
 

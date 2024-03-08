@@ -8,7 +8,7 @@ A simple map & geolocation field, built on top of open-source services and Mapbo
 
 ## Overview
 
-> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, please consider [making a donation of your choice](https://www.paypal.me/sylvainjl) or purchasing your license(s) through [my affiliate link](https://a.paddle.com/v2/click/1129/36369?link=1170).
+> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, please consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
 
 - [1. Installation](#1-installation)
 - [2. Setup](#2-setup)
@@ -27,6 +27,8 @@ A simple map & geolocation field, built on top of open-source services and Mapbo
 <br/>
 
 ## 1. Installation
+
+> Kirby 3: up to 1.1.4. Kirby 4: 2.0.0+
 
 Download and copy this repository to ```/site/plugins/locator```
 

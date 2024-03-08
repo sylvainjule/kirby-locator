@@ -9,11 +9,10 @@
 
 
 .k-locator-field {
+	--text-xxs: .75rem;
 
     .k-field-header {
-        .k-button + .k-button {
-            margin-left: 1.5rem;
-        }
+    	--icon-size: 16px;
     }
 
 	/* Input
@@ -25,33 +24,37 @@
 		align-items: center;
 		overflow: visible;
 		z-index: 3;
+		&-inner {
+			display: flex;
+			align-items: center;
+			width: 100%;
+		}
 		.k-text-input {
 			@include text-truncate;
 		}
 		button {
-			display: block;
 			border: none;
-			display: inline-block;
-			background: $color-dark;
-			color: $color-white;
-			padding: 0 25px 0 20px;
+			background: var(--color-gray-900);
+			color: white;
+			padding: 0 1.5rem 0 1.25rem;
 			height: 2.25rem;
-			font-size: $font-size-small;
+			font-size: var(--text-sm);
 			outline: 0;
 			display: flex;
 			align-items: center;
+			gap: .75rem;
 			svg {
 				width: 14px;
 				height: 14px;
 				fill: white;
-				margin-right: 10px;
+				max-inline-size: none;
 			}
 			&.disabled {
-				background: darken($color-background, 0%);
-				color: darken($color-background, 12%);
+				background: var(--color-gray-100);
+				color: var(--color-gray-400);
 				pointer-events: none;
 				svg {
-					fill: darken($color-background, 12%);
+					fill: var(--color-gray-400);
 				}
 			}
 		}
@@ -115,7 +118,7 @@
 				position: relative;
 				width: 50%;
 				padding: 0.75rem 0;
-				border-bottom: 1px solid lighten($color-border-light, 2%);
+				border-bottom: 1px solid var(--table-color-border);
 
 				// no border on the nth-last(2) only if it's an odd number,
 				// in case there's only one block in the last row
@@ -130,10 +133,10 @@
 							position: absolute;
 							content: " ";
 							right: 0;
-							top: 1rem;
-							height: calc(100% - 2rem);
+							top: .75rem;
+							height: calc(100% - 1.5rem);
 							width: 1px;
-							background: $color-border-light;
+							background: var(--table-color-border);
 						}
 					}
 				}
@@ -141,11 +144,13 @@
 					padding-left: 1.25rem;
 				}
 				.title {
-					color: lighten($color-dark, 60%);
+					color: var(--color-gray-600);
 					letter-spacing: 0.15px;
 					text-transform: uppercase;
-					margin-bottom: 3px;
-					font-size: $font-size-tiny;
+					font-size: var(--text-xxs);
+				}
+				.value {
+					margin-top: 0.3rem;
 				}
 			}
 		}
@@ -154,7 +159,7 @@
 				position: relative;
 				width: 100%;
 				padding: 0.5rem 0;
-				border-bottom: 1px solid lighten($color-border-light, 2%);
+				border-bottom: 1px solid var(--table-color-border);
 				display: flex;
 				align-items: center;
 				&:last-child {
@@ -162,11 +167,10 @@
 				}
 				.title {
 					position: relative;
-					color: lighten($color-dark, 60%);
+					color: var(--color-gray-600);
 					letter-spacing: 0.15px;
 					text-transform: uppercase;
-					margin-bottom: 3px;
-					font-size: $font-size-tiny;
+					font-size: var(--text-xxs);
 					width: 115px;
 					&:after {
 						position: absolute;
@@ -175,7 +179,7 @@
 						top: 0;
 						height: 100%;
 						width: 1px;
-						background: $color-border-light;
+						background: var(--table-color-border);
 					}
 				}
 				.value {
@@ -185,28 +189,9 @@
 		}
 	}
 	.k-empty {
-	    padding: 0;
-	    display: flex;
-	    align-items: center;
-	    flex-direction: row;
-	    justify-content: flex-start;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
 	    border-top: none;
-	    .k-icon {
-	        width: 38px;
-	        height: 38px;
-	        border-right: 1px solid #d6d6d6;
-	        margin-bottom: 0;
-	        display: flex;
-	        justify-content: center;
-	        align-items: center;
-	        svg {
-	            width: 14px;
-	        }
-	    }
-	    p {
-	        line-height: 1.25rem;
-	        padding: .5rem .75rem;
-	    }
 	}
 
 
@@ -236,6 +221,15 @@
                 width: 200px;
             }
 		}
+	}
+}
+
+.k-locator-error-dialog {
+	.k-dialog-footer {
+		padding-top: 0;
+	}
+	.k-dialog-buttons {
+		grid-template-columns: 1fr;
 	}
 }
 

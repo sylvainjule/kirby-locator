@@ -1,17 +1,17 @@
-import Locator from "./field/Locator.vue";
-import LocatorPreview from "./components/LocatorPreview.vue";
+import Locator from './field/Locator.vue';
+import LocatorPreview from './components/LocatorPreview.vue';
 
-import "./assets/svg/icons.js";
+import './assets/svg/icons.js';
 
-panel.plugin("sylvainjule/locator", {
+panel.plugin('sylvainjule/locator', {
     fields: {
         locator: Locator,
     },
     components: {
-        "k-locator-field-preview": LocatorPreview,
+        'k-locator-field-preview': LocatorPreview,
     },
     icons: {
         locatorMarker:
-            '<g><circle cx="8" cy="6.99" r="2"/><path d="M7.3,15.68c-.1-.1-4.19-3.7-4.19-3.8A6.34,6.34,0,0,1,1,7,7,7,0,0,1,7.9,0H8a7,7,0,0,1,7,6.9V7a6.72,6.72,0,0,1-2.1,5l-4.2,3.8A1.07,1.07,0,0,1,7.3,15.68Zm-2.7-5,3.4,3,3.39-3h0A5,5,0,0,0,13,7.09a5,5,0,0,0-4.89-5H8A4.88,4.88,0,0,0,3,7a5.22,5.22,0,0,0,1.6,3.69Z"/></g>',
+            '<circle cx="12" cy="10.48" r="3"/><path d="M10.95,23.51c-.15-.15-6.28-5.55-6.28-5.7-2.08-1.86-3.23-4.53-3.16-7.32C1.5,4.76,6.11,.08,11.85,0h.15c5.74,0,10.41,4.61,10.5,10.35v.15c.05,2.83-1.09,5.55-3.15,7.5l-6.3,5.7c-.65,.47-1.54,.4-2.1-.18Zm-4.05-7.5l5.1,4.5,5.08-4.5h0c1.51-1.39,2.38-3.33,2.41-5.38,0-4.08-3.26-7.41-7.33-7.5h-.16c-4.04-.1-7.4,3.09-7.5,7.13,0,.08,0,.15,0,.23,.03,2.09,.89,4.08,2.4,5.53h0Z"/>',
     },
 });

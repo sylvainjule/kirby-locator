@@ -1,13 +1,13 @@
 <template>
-    <div class="k-locator-field-preview">
-        <figure class="locator-preview">
-            <k-icon
-                type="locatorMarker"
-                back="pattern"
-                class="k-pages-field-preview-image"
-            />
-            <figcaption v-html="location"></figcaption>
-        </figure>
+    <div class="k-bubbles-field-preview k-locator-field-preview">
+        <ul class="k-bubbles">
+            <li class="k-bubble" data-has-text="true">
+                <figure class="k-frame k-image-frame k-image" style="--fit: contain; --back: var(--bubble-back);">
+                     <k-icon type="pin" />
+                </figure>
+                <span class="k-bubble-text" v-html="location"></span>
+            </li>
+        </ul>
     </div>
 </template>
 

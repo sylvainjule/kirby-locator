@@ -6,46 +6,57 @@
     >
         <!-- Edit button -->
         <template slot="options">
-            <k-button
-                v-if="valueExists && filledStatus == 'closed'"
-                :id="_uid"
-                icon="edit"
-                @click="toggle('open')"
-            >
-                {{ $t("edit") }}
-            </k-button>
-            <k-button
-                v-if="valueExists && filledStatus == 'open'"
-                :id="_uid"
-                icon="trash"
-                @click="resetValue"
-            >
-                {{ $t("locator.reset") }}
-            </k-button>
-            <k-button
-                v-if="valueExists && filledStatus == 'open'"
-                :id="_uid"
-                icon="collapse"
-                @click="toggle('closed')"
-            >
-                {{ $t("locator.collapse") }}
-            </k-button>
+            <div class="k-button-group">
+                <k-button
+                    v-if="valueExists && filledStatus == 'closed'"
+                    :id="_uid"
+                    icon="edit"
+                    @click="toggle('open')"
+                    size="xs"
+                    variant="filled"
+                >
+                    {{ $t("edit") }}
+                </k-button>
+                <k-button
+                    v-if="valueExists && filledStatus == 'open'"
+                    :id="_uid"
+                    icon="trash"
+                    @click="resetValue"
+                    size="xs"
+                    variant="filled"
+                >
+                    {{ $t("locator.reset") }}
+                </k-button>
+                <k-button
+                    v-if="valueExists && filledStatus == 'open'"
+                    :id="_uid"
+                    icon="collapse"
+                    @click="toggle('closed')"
+                    size="xs"
+                    variant="filled"
+                >
+                    {{ $t("locator.collapse") }}
+                </k-button>
+            </div>
         </template>
         <div class="k-input k-locator-input" data-theme="field">
-            <input
-                ref="input"
-                v-model="location"
-                class="k-text-input"
-                :placeholder="$t('locator.placeholder')"
-                @input="onLocationInput"
-            />
-            <button
-                :class="[{ disabled: !location.length }]"
-                @click="getCoordinates"
-            >
-                <svg><use href="#icon-locator-locate" /></svg>
-                {{ $t("locator.locate") }}
-            </button>
+            <form class="k-locator-input-inner">
+                <input
+                    ref="input"
+                    v-model="location"
+                    class="k-text-input"
+                    :placeholder="$t('locator.placeholder')"
+                    @input="onLocationInput"
+                />
+                <button
+                    :class="[{ disabled: !location.length }]"
+                    type="submit"
+                    @click="getCoordinates"
+                >
+                    <svg><use href="#icon-locator-locate" /></svg>
+                    {{ $t("locator.locate") }}
+                </button>
+            </form>
             <k-dropdown-content v-if="autocomplete" ref="dropdown">
                 <k-dropdown-item
                     v-for="(option, index) in dropdownOptions"
@@ -59,13 +70,8 @@
                 </k-dropdown-item>
             </k-dropdown-content>
         </div>
-        <k-dialog ref="dialog" @close="error = ''">
+        <k-dialog ref="dialog" class="k-locator-error-dialog" @close="error = ''" :cancelButton="$t('close')" :submitButton="false">
             <k-text>{{ error }}</k-text>
-            <k-button-group slot="footer">
-                <k-button icon="check" @click="$refs.dialog.close()">
-                    {{ $t("confirm") }}
-                </k-button>
-            </k-button-group>
         </k-dialog>
 
         <div class="k-locator-container">

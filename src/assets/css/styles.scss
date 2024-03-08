@@ -58,18 +58,16 @@
 				}
 			}
 		}
-		.k-dropdown-content {
-			max-width: 100%;
-			overflow: hidden;
-			.k-location-type {
-				color: #999;
-    			margin-left: .25rem;
-    			&:before {
-    				content: " (";
-    			}
-    			&:after {
-    				content: ")";
-    			}
+		.k-locator-dropdown {
+			top: calc(100% + 2px) !important;
+			width: 100%;
+			display: block;
+			.info {
+				color: var(--color-gray-500);
+				margin-left: 0.25rem;
+			}
+			&.hidden {
+				display: none;
 			}
 		}
 	}

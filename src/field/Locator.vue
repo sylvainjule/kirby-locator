@@ -28,7 +28,7 @@
                     {{ $t("locator.reset") }}
                 </k-button>
                 <k-button
-                    v-if="valueExists && filledStatus == 'open'"
+                    v-if="valueExists && filledStatus == 'open' && collapse"
                     :id="_uid"
                     icon="collapse"
                     @click="toggle('closed')"
@@ -41,11 +41,12 @@
         </template>
         <div class="k-input k-locator-input" data-theme="field">
             <form class="k-locator-input-inner">
-                <k-text-input 
+                <k-text-input
                     ref="input"
                     v-model="location"
                     :placeholder="$t('locator.placeholder')"
-                    @input="onLocationInput" />
+                    @input="onLocationInput"
+                />
                 <button
                     :class="[{ disabled: !location.length }]"
                     type="submit"
@@ -55,9 +56,29 @@
                     {{ $t("locator.locate") }}
                 </button>
             </form>
-            <k-picklist-dropdown v-if="autocomplete" ref="dropdown" :class="['k-locator-dropdown', {'hidden': !dropdownOptions.length && (!location.length || forceHideDropdown)}]" :options="dropdownOptions" :search="false" @input="select" />
+            <k-picklist-dropdown
+                v-if="autocomplete"
+                ref="dropdown"
+                :class="[
+                    'k-locator-dropdown',
+                    {
+                        hidden:
+                            !dropdownOptions.length &&
+                            (!location.length || forceHideDropdown),
+                    },
+                ]"
+                :options="dropdownOptions"
+                :search="false"
+                @input="select"
+            />
         </div>
-        <k-dialog ref="dialog" class="k-locator-error-dialog" @close="error = ''" :cancelButton="$t('close')" :submitButton="false">
+        <k-dialog
+            ref="dialog"
+            class="k-locator-error-dialog"
+            @close="error = ''"
+            :cancelButton="$t('close')"
+            :submitButton="false"
+        >
             <k-text>{{ error }}</k-text>
         </k-dialog>
 
@@ -89,7 +110,7 @@
 </template>
 
 <script>
-import L from "leaflet";
+import L from "leaflet"
 
 export default {
     data() {
@@ -101,10 +122,10 @@ export default {
             error: "",
             limit: 1,
             dropdownOptions: [],
-            filledStatus: "closed",
+            filledStatus: this.collapse ? "closed" : "open",
             dragged: false,
             forceHideDropdown: false,
-        };
+        }
     },
     props: {
         tiles: String,
@@ -114,6 +135,7 @@ export default {
         autoSaveZoom: Boolean,
         mapbox: Object,
         display: [Array, Boolean],
+        collapse: Boolean,
         geocoding: String,
         liststyle: String,
         draggable: Boolean,
@@ -134,47 +156,47 @@ export default {
     },
     computed: {
         mapId() {
-            return "map-" + this._uid;
+            return "map-" + this._uid
         },
         icon() {
-            let color = this.markerColor;
-            color = color == "light" ? "#efefef" : color;
-            color = color == "dark" ? "#161719" : color;
+            let color = this.markerColor
+            color = color == "light" ? "#efefef" : color
+            color = color == "dark" ? "#161719" : color
 
             let icon =
                 '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 142"><path fill="' +
                 color +
-                '" d="M60,0A59.68,59.68,0,0,0,27.37,9.62c-.31.19-.61.39-.92.6A55.74,55.74,0,0,0,7.57,30.71,59.75,59.75,0,0,0,2.63,77.35q.45,1.53,1,3a83.85,83.85,0,0,0,20.53,32.08c9.72,9.51,20.75,17.68,31.2,26.45l3.7,3.09h2c4.7-3.67,9.69-7,14-11.1,9.2-8.69,18.47-17.37,26.92-26.77.49-.54,1-1.09,1.44-1.64l.3-.36c.43-.54.86-1.06,1.28-1.6s.9-1.16,1.34-1.76,1-1.31,1.4-2,.8-1.21,1.19-1.82c.06-.09.12-.18.17-.27.36-.56.72-1.14,1.06-1.72l.08-.13c.29-.5.58-1,.86-1.51.46-.82.91-1.64,1.34-2.48a58.77,58.77,0,0,0,5.35-13s0,0,0,0A59.85,59.85,0,0,0,60,0Zm0,37.55a22.23,22.23,0,1,1-22.2,22.33A22.15,22.15,0,0,1,60,37.55Z"/></svg>';
-            let iconUrl = "data:image/svg+xml;base64," + btoa(icon);
+                '" d="M60,0A59.68,59.68,0,0,0,27.37,9.62c-.31.19-.61.39-.92.6A55.74,55.74,0,0,0,7.57,30.71,59.75,59.75,0,0,0,2.63,77.35q.45,1.53,1,3a83.85,83.85,0,0,0,20.53,32.08c9.72,9.51,20.75,17.68,31.2,26.45l3.7,3.09h2c4.7-3.67,9.69-7,14-11.1,9.2-8.69,18.47-17.37,26.92-26.77.49-.54,1-1.09,1.44-1.64l.3-.36c.43-.54.86-1.06,1.28-1.6s.9-1.16,1.34-1.76,1-1.31,1.4-2,.8-1.21,1.19-1.82c.06-.09.12-.18.17-.27.36-.56.72-1.14,1.06-1.72l.08-.13c.29-.5.58-1,.86-1.51.46-.82.91-1.64,1.34-2.48a58.77,58.77,0,0,0,5.35-13s0,0,0,0A59.85,59.85,0,0,0,60,0Zm0,37.55a22.23,22.23,0,1,1-22.2,22.33A22.15,22.15,0,0,1,60,37.55Z"/></svg>'
+            let iconUrl = "data:image/svg+xml;base64," + btoa(icon)
 
             return L.icon({
                 iconUrl: iconUrl,
                 iconSize: [40, 47],
                 iconAnchor: [20, 47],
-            });
+            })
         },
         valueExists() {
             return this.value &&
                 (Object.keys(this.value).length > 1 ||
                     (Object.keys(this.value).length == 1 && !this.value.zoom))
                 ? Object.keys(this.value).length
-                : false;
+                : false
         },
         status() {
-            return this.valueExists ? this.filledStatus : "";
+            return this.valueExists ? this.filledStatus : ""
         },
         defaultCoords() {
             return this.valueExists
                 ? [this.value.lat, this.value.lon]
-                : [this.center.lat, this.center.lon];
+                : [this.center.lat, this.center.lon]
         },
         defaultZoom() {
             return this.valueExists && this.value.zoom
                 ? this.value.zoom
-                : this.zoom.default;
+                : this.zoom.default
         },
         coords() {
-            return this.valueExists ? [this.value.lat, this.value.lon] : [];
+            return this.valueExists ? [this.value.lat, this.value.lon] : []
         },
         tileUrl() {
             if (this.tiles == "mapbox" || this.tiles == "mapbox.custom") {
@@ -185,49 +207,49 @@ export default {
                     (L.Browser.retina ? "@2x" : "") +
                     "?access_token=" +
                     this.mapbox.token
-                );
+                )
             } else if (this.tiles == "wikimedia") {
                 return (
                     "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}" +
                     (L.Browser.retina ? "@2x.png" : ".png")
-                );
+                )
             } else if (this.tiles == "openstreetmap") {
-                return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+                return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             } else if (this.tiles == "light_all" || this.tiles == "voyager") {
                 return (
                     "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/" +
                     this.tiles +
                     "/{z}/{x}/{y}" +
                     (L.Browser.retina ? "@2x.png" : ".png")
-                );
-            } else return "";
+                )
+            } else return ""
         },
         attribution() {
             if (this.tiles == "mapbox" || this.tiles == "mapbox.custom") {
-                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/">Mapbox</a>';
+                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             } else if (this.tiles == "wikimedia") {
-                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://maps.wikimedia.org" target="_blank" rel="noreferrer">Wikimedia</a>';
+                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://maps.wikimedia.org" target="_blank" rel="noreferrer">Wikimedia</a>'
             } else if (this.tiles == "openstreetmap") {
-                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>';
+                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>'
             } else if (this.tiles == "light_all" || this.tiles == "voyager") {
-                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution" target="_blank" rel="noreferrer">CARTO</a>';
+                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution" target="_blank" rel="noreferrer">CARTO</a>'
             } else
-                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>';
+                return '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>'
         },
         searchQuery() {
             if (this.geocoding == "nominatim") {
                 let languageParam = this.language
                     ? "&accept-language=" + this.language
-                    : "";
+                    : ""
                 return (
                     "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=" +
                     this.location +
                     languageParam
-                );
+                )
             } else if (this.geocoding == "mapbox") {
                 let languageParam = this.language
                     ? "&language=" + this.language
-                    : "";
+                    : ""
                 return (
                     "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
                     this.location +
@@ -236,96 +258,95 @@ export default {
                     "&access_token=" +
                     this.mapbox.token +
                     languageParam
-                );
-            } else return "";
+                )
+            } else return ""
         },
     },
     watch: {
         value() {
-            this.updateMap();
+            this.updateMap()
         },
     },
     mounted() {
-        this.initMap();
+        this.initMap()
     },
     methods: {
         onLocationInput() {
-            if (!this.autocomplete) return false;
+            if (!this.autocomplete) return false
 
             if (this.geocoding && this.location.length) {
-                if (this.geocoding != "mapbox") return false;
+                if (this.geocoding != "mapbox") return false
 
                 const fetchInit = {
                     referrerPolicy: "strict-origin-when-cross-origin",
-                };
+                }
 
-                this.limit = 5;
+                this.limit = 5
                 fetch(this.searchQuery, fetchInit)
-                    .then((response) => response.json())
-                    .then((response) => {
+                    .then(response => response.json())
+                    .then(response => {
                         // if places are found
                         if (response.features.length) {
                             // keep the relevant ones
                             let suggestions = response.features.filter(
-                                (el) => el.relevance == 1
-                            );
+                                el => el.relevance == 1
+                            )
                             // make them the dropdown options
-                            this.dropdownOptions = suggestions.map((el) => {
+                            this.dropdownOptions = suggestions.map(el => {
                                 return {
                                     text: el.place_name,
                                     value: el.place_name,
-                                };
-                            });
+                                }
+                            })
                             this.$refs.dropdown.open()
                         } else {
                             this.dropdownOptions = []
                         }
                     })
-                    .catch((error) => {
-                        this.error = this.$t("locator.error");
-                        this.$refs.dialog.open();
+                    .catch(error => {
+                        this.error = this.$t("locator.error")
+                        this.$refs.dialog.open()
                         this.dropdownOptions = []
-                    });
-            } 
-            else {
+                    })
+            } else {
                 this.dropdownOptions = []
             }
         },
         select(values) {
-            this.location = values[0];
+            this.location = values[0]
             this.dropdownOptions = []
             this.forceHideDropdown = true
-            this.getCoordinates();
+            this.getCoordinates()
         },
         translatedTitle(key) {
-            key = key.replace("lon", "longitude");
-            key = key.replace("lat", "latitude");
-            return this.$t("locator." + key);
+            key = key.replace("lon", "longitude")
+            key = key.replace("lat", "latitude")
+            return this.$t("locator." + key)
         },
         toggle(arg) {
-            this.filledStatus = arg;
+            this.filledStatus = arg
             this.$nextTick(() => {
-                this.map.invalidateSize();
-                this.map.setView(this.coords, this.defaultZoom);
-                if (arg == "closed" && this.marker) this.disableMapEvents();
-                else if (arg == "open" && this.marker) this.enableMapEvents();
-            });
+                this.map.invalidateSize()
+                this.map.setView(this.coords, this.defaultZoom)
+                if (arg == "closed" && this.marker) this.disableMapEvents()
+                else if (arg == "open" && this.marker) this.enableMapEvents()
+            })
         },
         initMap() {
             // init map
             let zoom = this.value
                 ? this.value.zoom || this.defaultZoom
-                : this.defaultZoom;
+                : this.defaultZoom
 
             this.map = L.map(this.mapId, {
                 minZoom: this.zoom.min,
                 maxZoom: this.zoom.max,
-            }).setView(this.defaultCoords, zoom);
+            }).setView(this.defaultCoords, zoom)
 
             // set the tile layer
             this.tileLayer = L.tileLayer(this.tileUrl, {
                 attribution: this.attribution,
-            });
+            })
 
             // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API
             if (this.tiles == "mapbox" || this.tiles == "mapbox.custom") {
@@ -334,41 +355,41 @@ export default {
                     () =>
                         (document.querySelector("meta[name=referrer]").content =
                             "strict-origin-when-cross-origin")
-                );
+                )
                 this.tileLayer.on(
                     "load",
                     () =>
                         (document.querySelector("meta[name=referrer]").content =
                             "same-origin")
-                );
+                )
             }
 
             // add the tile layer to the map
-            this.map.addLayer(this.tileLayer);
+            this.map.addLayer(this.tileLayer)
 
             // create a marker
-            if (this.coords.length) this.setMarker();
+            if (this.coords.length) this.setMarker()
 
             if (this.saveZoom && this.autoSaveZoom) {
                 this.map.on("zoomend", () => {
                     this.value = {
                         ...this.value,
                         zoom: this.map.getZoom(),
-                    };
+                    }
 
-                    this.$emit("input", this.value);
-                    this.dragged = true;
+                    this.$emit("input", this.value)
+                    this.dragged = true
                     setTimeout(() => {
-                        this.dragged = false;
-                    }, 500);
-                });
+                        this.dragged = false
+                    }, 500)
+                })
             }
 
             if (this.dblclick == "marker") {
-                this.map.doubleClickZoom.disable();
-                this.map.on("dblclick", (e) => {
-                    this.setCoordinates(e.latlng.lat + "," + e.latlng.lng);
-                });
+                this.map.doubleClickZoom.disable()
+                this.map.on("dblclick", e => {
+                    this.setCoordinates(e.latlng.lat + "," + e.latlng.lng)
+                })
             }
         },
         updateMap() {
@@ -376,50 +397,51 @@ export default {
                 // If a marker already exists
                 if (this.marker) {
                     if (this.valueExists) {
-                        this.marker.setLatLng(this.coords);
-                        if (!this.dragged) this.toggle("closed");
+                        this.marker.setLatLng(this.coords)
+                        if (!this.dragged && this.collapse)
+                            this.toggle("closed")
                     } else {
-                        this.map.removeLayer(this.marker);
-                        this.marker = null;
+                        this.map.removeLayer(this.marker)
+                        this.marker = null
                     }
                 }
 
                 // If a marker should be created
                 else if (!this.marker && this.valueExists) {
-                    this.setMarker();
-                    if (!this.dragged) this.toggle("closed");
+                    this.setMarker()
+                    if (!this.dragged && this.collapse) this.toggle("closed")
                 }
 
                 // If there is a filled value
                 if (this.valueExists) {
-                    this.map.panTo(this.coords);
+                    this.map.panTo(this.coords)
                 }
 
                 // If there is no filled value, reset default view
                 else {
                     this.$nextTick(() => {
-                        this.map.invalidateSize();
+                        this.map.invalidateSize()
                         let zoom = this.value
                             ? this.value.zoom || this.defaultZoom
-                            : this.defaultZoom;
-                        this.map.setView(this.defaultCoords, zoom);
-                    });
+                            : this.defaultZoom
+                        this.map.setView(this.defaultCoords, zoom)
+                    })
                 }
             }
         },
         setMarker() {
-            if (this.marker) this.map.removeLayer(this.marker);
+            if (this.marker) this.map.removeLayer(this.marker)
             this.marker = L.marker(this.coords, {
                 icon: this.icon,
                 draggable: this.draggable,
                 autoPan: this.draggable,
-            });
-            this.map.addLayer(this.marker);
-            if (this.filledStatus == "closed") this.disableMapEvents();
+            })
+            this.map.addLayer(this.marker)
+            if (this.filledStatus == "closed") this.disableMapEvents()
 
-            this.marker.on("dragend", (e) => {
-                let position = this.marker.getLatLng();
-                let _this = this;
+            this.marker.on("dragend", e => {
+                let position = this.marker.getLatLng()
+                let _this = this
 
                 this.value = {
                     lat: parseFloat(position.lat),
@@ -432,79 +454,79 @@ export default {
                     postcode: null,
                     address: null,
                     osm: null,
-                };
+                }
 
                 if (this.saveZoom) {
                     this.value = {
                         ...this.value,
                         zoom: this.map.getZoom(),
-                    };
+                    }
                 }
 
-                this.$emit("input", this.value);
-                this.dragged = true;
+                this.$emit("input", this.value)
+                this.dragged = true
                 setTimeout(() => {
-                    _this.dragged = false;
-                }, 500);
-            });
+                    _this.dragged = false
+                }, 500)
+            })
         },
         getCoordinates(e) {
             if (e) {
-                e.preventDefault();
-                e.stopPropagation();
+                e.preventDefault()
+                e.stopPropagation()
             }
 
-            if (this.$refs.dropdown) this.$refs.dropdown.close();
-            this.limit = 1;
+            if (this.$refs.dropdown) this.$refs.dropdown.close()
+            this.limit = 1
 
             if (this.isLatLon(this.location)) {
-                this.setCoordinates(this.location);
+                this.setCoordinates(this.location)
                 this.forceHideDropdown = false
-                return true;
+                return true
             }
 
             if (this.geocoding && this.location.length) {
                 const fetchInit =
                     this.geocoding == "mapbox"
                         ? { referrerPolicy: "strict-origin-when-cross-origin" }
-                        : {};
+                        : {}
 
                 fetch(this.searchQuery, fetchInit)
-                    .then((response) => response.json())
-                    .then((response) => {
+                    .then(response => response.json())
+                    .then(response => {
                         if (response.length || Object.keys(response).length) {
                             if (this.geocoding == "nominatim") {
-                                this.setNominatimResponse(response);
+                                this.setNominatimResponse(response)
                             } else if (this.geocoding == "mapbox") {
-                                this.setMapboxResponse(response);
+                                this.setMapboxResponse(response)
                             }
-                            this.location = "";
+                            this.location = ""
                         } else {
-                            this.error = this.$t("locator.empty_response");
-                            this.$refs.dialog.open();
-                            this.value = {};
+                            this.error = this.$t("locator.empty_response")
+                            this.$refs.dialog.open()
+                            this.value = {}
                         }
 
-                        this.$emit("input", this.value);
+                        this.$emit("input", this.value)
                         this.forceHideDropdown = false
                     })
-                    .catch((error) => {
-                        this.error = this.$t("locator.error");
-                        this.$refs.dialog.open();
+                    .catch(error => {
+                        this.error = this.$t("locator.error")
+                        this.$refs.dialog.open()
                         this.forceHideDropdown = false
-                    });
+                    })
             }
         },
         isLatLon(str) {
             const regexExp =
-                /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
-            return regexExp.test(str);
+                /^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/gi
+            return regexExp.test(str)
         },
         setCoordinates(str) {
-            let arr = str.split(",");
-            let lat = arr[0].replace(" ", "");
-            let lon = arr[1].replace(" ", "");
-            let _this = this;
+            let arr = str.split(",")
+            let lat = arr[0].replace(" ", "")
+            let lon = arr[1].replace(" ", "")
+            let _this = this
 
             this.value = {
                 lat: parseFloat(lat),
@@ -517,24 +539,24 @@ export default {
                 postcode: null,
                 address: null,
                 osm: null,
-            };
+            }
 
             if (this.saveZoom) {
                 this.value = {
                     ...this.value,
                     zoom: this.map.getZoom(),
-                };
+                }
             }
 
-            this.location = "";
-            this.$emit("input", this.value);
-            this.dragged = true;
+            this.location = ""
+            this.$emit("input", this.value)
+            this.dragged = true
             setTimeout(() => {
-                _this.dragged = false;
-            }, 500);
+                _this.dragged = false
+            }, 500)
         },
         setNominatimResponse(response) {
-            response = response[0];
+            response = response[0]
 
             this.value = {
                 lat: parseFloat(response.lat),
@@ -550,97 +572,91 @@ export default {
                 country: response.address.country,
                 countryCode: response.address?.country_code,
                 postcode: response.address.postcode,
-                address: 
-                    response.address.road ||
-                    response.address.square,
+                address: response.address.road || response.address.square,
                 osm: response.osm_id,
-            };
+            }
             if (this.saveZoom) {
                 this.value = {
                     ...this.value,
                     zoom: this.map.getZoom(),
-                };
+                }
             }
         },
         setMapboxResponse(response) {
-            response = response.features[0];
+            response = response.features[0]
 
             this.value = {
                 lat: parseFloat(response.center[1]),
                 lon: parseFloat(response.center[0]),
                 number: response.address || "",
-                city: response.context.find((el) => el.id.startsWith("place"))
-                    ? response.context.find((el) => el.id.startsWith("place"))
+                city: response.context.find(el => el.id.startsWith("place"))
+                    ? response.context.find(el => el.id.startsWith("place"))
                           .text
                     : "",
-                region: response.context.find((el) =>
-                    el.id.startsWith("region")
-                )
-                    ? response.context.find((el) => el.id.startsWith("region"))
+                region: response.context.find(el => el.id.startsWith("region"))
+                    ? response.context.find(el => el.id.startsWith("region"))
                           .text
                     : "",
-                country: response.context.find((el) =>
+                country: response.context.find(el =>
                     el.id.startsWith("country")
                 )
-                    ? response.context.find((el) => el.id.startsWith("country"))
+                    ? response.context.find(el => el.id.startsWith("country"))
                           .text
                     : "",
-                countryCode: response.context.find((el) =>
+                countryCode: response.context.find(el =>
                     el.id.startsWith("country")
                 )
-                    ? response.context.find((el) => el.id.startsWith("country"))
+                    ? response.context.find(el => el.id.startsWith("country"))
                           ?.short_code
                     : "",
-                postcode: response.context.find((el) =>
+                postcode: response.context.find(el =>
                     el.id.startsWith("postcode")
                 )
-                    ? response.context.find((el) =>
-                          el.id.startsWith("postcode")
-                      ).text
+                    ? response.context.find(el => el.id.startsWith("postcode"))
+                          .text
                     : "",
                 address: response.text || "",
-            };
+            }
             if (this.saveZoom) {
                 this.value = {
                     ...this.value,
                     zoom: this.map.getZoom(),
-                };
+                }
             }
         },
         capitalize(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
+            return str.charAt(0).toUpperCase() + str.slice(1)
         },
         disableMapEvents() {
             if (this.map) {
-                this.map.scrollWheelZoom.disable();
-                this.map.dragging.disable();
-                this.map.touchZoom.disable();
-                this.map.doubleClickZoom.disable();
-                this.map.boxZoom.disable();
-                this.map.keyboard.disable();
-                if (this.map.tap) this.map.tap.disable();
+                this.map.scrollWheelZoom.disable()
+                this.map.dragging.disable()
+                this.map.touchZoom.disable()
+                this.map.doubleClickZoom.disable()
+                this.map.boxZoom.disable()
+                this.map.keyboard.disable()
+                if (this.map.tap) this.map.tap.disable()
             }
-            if (this.marker) this.marker.dragging.disable();
+            if (this.marker) this.marker.dragging.disable()
         },
         enableMapEvents() {
             if (this.map) {
-                this.map.scrollWheelZoom.enable();
-                this.map.dragging.enable();
-                this.map.touchZoom.enable();
-                if (this.dblclick != "marker")
-                    this.map.doubleClickZoom.enable();
-                this.map.boxZoom.enable();
-                this.map.keyboard.enable();
-                if (this.map.tap) this.map.tap.enable();
+                this.map.scrollWheelZoom.enable()
+                this.map.dragging.enable()
+                this.map.touchZoom.enable()
+                if (this.dblclick != "marker") this.map.doubleClickZoom.enable()
+                this.map.boxZoom.enable()
+                this.map.keyboard.enable()
+                if (this.map.tap) this.map.tap.enable()
             }
-            if (this.marker && this.draggable) this.marker.dragging.enable();
+            if (this.marker && this.draggable) this.marker.dragging.enable()
         },
         resetValue() {
-            this.value = {};
-            this.$emit("input", this.value);
+            this.value = {}
+            this.$emit("input", this.value)
         },
     },
-};
+}
 </script>
 
 <style lang="scss">

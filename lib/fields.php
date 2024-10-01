@@ -14,6 +14,9 @@ return array(
             'liststyle' => function($liststyle = null) {
             	return $liststyle ?? option('sylvainjule.locator.liststyle');
             },
+            'collapse' => function($collapse = null) {
+            	return $collapse ?? option('sylvainjule.locator.collapse');
+            },
             'display' => function($display = null) {
             	return $display ?? option('sylvainjule.locator.display');
             },

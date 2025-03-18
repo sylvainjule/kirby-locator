@@ -34,8 +34,8 @@
 		}
 		button {
 			border: none;
-			background: var(--color-gray-900);
-			color: white;
+			background: var(--color-blue-700);
+			color: var(--color-white);
 			padding: 0 1.5rem 0 1.25rem;
 			height: 2.25rem;
 			font-size: var(--text-sm);
@@ -50,11 +50,11 @@
 				max-inline-size: none;
 			}
 			&.disabled {
-				background: var(--color-gray-100);
-				color: var(--color-gray-400);
+				background: var(--button-filled-color-back);
+				color: var(--color-gray-600);
 				pointer-events: none;
 				svg {
-					fill: var(--color-gray-400);
+					fill: var(--color-gray-600);
 				}
 			}
 		}
@@ -63,7 +63,7 @@
 			width: 100%;
 			display: block;
 			.info {
-				color: var(--color-gray-500);
+				color: var(--color-gray-600);
 				margin-left: 0.25rem;
 			}
 			&.hidden {

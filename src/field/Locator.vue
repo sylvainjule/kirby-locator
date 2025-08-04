@@ -28,7 +28,7 @@
                     {{ $t("locator.reset") }}
                 </k-button>
                 <k-button
-                    v-if="valueExists && filledStatus == 'open'"
+                    v-if="valueExists && filledStatus == 'open' && collapse"
                     :id="_uid"
                     icon="collapse"
                     @click="toggle('closed')"
@@ -57,7 +57,7 @@
             </form>
             <k-picklist-dropdown v-if="autocomplete" ref="dropdown" :class="['k-locator-dropdown', {'hidden': !dropdownOptions.length && (!location.length || forceHideDropdown)}]" :options="dropdownOptions" :search="false" @input="select" />
         </div>
-        
+
         <k-dialog ref="dialog" class="k-locator-error-dialog" @close="error = ''" :cancelButton="$t('close')" :submitButton="false">
             <k-text>{{ error }}</k-text>
         </k-dialog>
@@ -102,7 +102,7 @@ export default {
             error: "",
             limit: 1,
             dropdownOptions: [],
-            filledStatus: "closed",
+            filledStatus: this.collapse ? 'closed' : 'open',
             dragged: false,
             forceHideDropdown: false,
         };
@@ -113,6 +113,7 @@ export default {
         zoom: Object,
         saveZoom: Boolean,
         autoSaveZoom: Boolean,
+        collapse: Boolean,
         mapbox: Object,
         display: [Array, Boolean],
         geocoding: String,
@@ -378,7 +379,7 @@ export default {
                 if (this.marker) {
                     if (this.valueExists) {
                         this.marker.setLatLng(this.coords);
-                        if (!this.dragged) this.toggle("closed");
+                        if (!this.dragged && this.collapse) this.toggle("closed");
                     } else {
                         this.map.removeLayer(this.marker);
                         this.marker = null;
@@ -388,7 +389,7 @@ export default {
                 // If a marker should be created
                 else if (!this.marker && this.valueExists) {
                     this.setMarker();
-                    if (!this.dragged) this.toggle("closed");
+                    if (!this.dragged && this.collapse) this.toggle("closed");
                 }
 
                 // If there is a filled value

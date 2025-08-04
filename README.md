@@ -8,7 +8,7 @@ A simple map & geolocation field, built on top of open-source services and Mapbo
 
 ## Overview
 
-> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, please consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
+> This plugin is completely free and published under the MIT license. However, if you are using it in a commercial project and want to help me keep up with maintenance, you can consider [making a donation of your choice](https://www.paypal.me/sylvainjl).
 
 - [1. Installation](#1-installation)
 - [2. Setup](#2-setup)
@@ -235,12 +235,17 @@ mymap:
 If set to `true`, the marker will be repositionable in case search result isn't precise enough. After being moved, only the new `lat` and `lng` will be stored. Default is `true`.
 
 
-#### 5.7. `autocomplete`
+#### 5.7. `collapse`
+
+If set to `true`, the map will collapse when a location is selected, with a toggle to expand it for editing. If `false`, the map will always be expanded and interactive. Default is `true`.
+
+
+#### 5.8. `autocomplete`
 
 If set to `true`, **when Mapbox is used for geocoding**, you will be presented up to 5 suggestions while typing your request. Default is `true`.
 
 
-#### 5.8. `liststyle`
+#### 5.9. `liststyle`
 
 ![liststyle](https://user-images.githubusercontent.com/14079751/48487819-9cf91580-e81f-11e8-8e20-eba57f122261.jpg)
 
@@ -253,7 +258,7 @@ mymap:
 ```
 
 
-#### 5.9. `marker`
+#### 5.10. `marker`
 
 The color of the marker used, either `dark`, `light` or your own HEX value. Default is `dark`.
 
@@ -263,7 +268,7 @@ mymap:
   marker: dark
 ```
 
-#### 5.10. `language`
+#### 5.11. `language`
 
 If this option is set with an [ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (en, fr, de, etc.), the geocoding service will return results in the requested language if available. Default is `false`.
 
@@ -273,7 +278,7 @@ mymap:
   language: false # or 'de' | 'fr' | 'en' | …
 ```
 
-#### 5.11. `dblclick`
+#### 5.12. `dblclick`
 
 Whether a double click on the map should trigger a zoom (`zoom`) or add a marker / move the existing marker to the coordinates of the click event (`marker`). Default is `zoom`.
 
@@ -300,6 +305,7 @@ return array(
     'sylvainjule.locator.autoSaveZoom' => false,
     'sylvainjule.locator.display'      => array('lat','lon','number','address','postcode','city','country'),
     'sylvainjule.locator.draggable'    => true,
+    'sylvainjule.locator.collapse'     => true,
     'sylvainjule.locator.autocomplete' => true,
     'sylvainjule.locator.liststyle'    => 'columns',
     'sylvainjule.locator.marker'       => 'dark',

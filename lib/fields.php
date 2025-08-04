@@ -20,6 +20,9 @@ return array(
             'draggable' => function($draggable = null) {
             	return $draggable ?? option('sylvainjule.locator.draggable');
             },
+            'collapse' => function($collapse = null) {
+                return $collapse ?? option('sylvainjule.locator.collapse');
+            },
             'autocomplete' => function($autocomplete = null) {
             	return $autocomplete ?? option('sylvainjule.locator.autocomplete');
             },

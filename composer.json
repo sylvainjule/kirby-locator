@@ -3,7 +3,7 @@
     "description": "A map & geolocation field, built on top of open-source services / Mapbox",
     "type": "kirby-plugin",
     "license": "MIT",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "authors": [
         {
             "name": "Sylvain Julé",

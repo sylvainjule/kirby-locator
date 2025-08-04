@@ -57,6 +57,7 @@
             </form>
             <k-picklist-dropdown v-if="autocomplete" ref="dropdown" :class="['k-locator-dropdown', {'hidden': !dropdownOptions.length && (!location.length || forceHideDropdown)}]" :options="dropdownOptions" :search="false" @input="select" />
         </div>
+        
         <k-dialog ref="dialog" class="k-locator-error-dialog" @close="error = ''" :cancelButton="$t('close')" :submitButton="false">
             <k-text>{{ error }}</k-text>
         </k-dialog>

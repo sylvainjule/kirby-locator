@@ -7,6 +7,10 @@
     'components/_preview.scss',
     'components/_map.scss';
 
+.k-locator-container {
+	border-radius: var(--rounded);
+	overflow: hidden;
+}
 
 .k-locator-field {
 	--text-xxs: .75rem;
@@ -50,7 +54,7 @@
 				max-inline-size: none;
 			}
 			&.disabled {
-				background: var(--color-gray-100);
+				background: light-dark(var(--color-gray-100), var(--color-gray-800));
 				color: var(--color-gray-400);
 				pointer-events: none;
 				svg {
@@ -111,6 +115,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		padding: 0.25rem 1rem;
+		background-color: light-dark(var(--color-gray-100), var(--color-gray-850, var(--color-gray-800)));
 		&.columns {
 			.content-block {
 				position: relative;

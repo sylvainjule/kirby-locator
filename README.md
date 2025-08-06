@@ -2,7 +2,7 @@
 
 A simple map & geolocation field, built on top of open-source services and Mapbox.
 
-![screenshot](https://user-images.githubusercontent.com/14079751/48486342-89e44680-e81b-11e8-93fb-c3eadd7fbb61.jpg)
+![screenshot](https://github.com/user-attachments/assets/c6c24f87-38fe-4a57-8ee7-444ae0f899e7)
 
 <br/>
 

@@ -5,6 +5,7 @@ Kirby::plugin('sylvainjule/locator', array(
 		'token'        => '',
 		'id'           => 'mapbox.outdoors',
 		'tiles'        => 'positron',
+		'tilesKey'     => '',
 		'geocoding'    => 'nominatim',
 		'display'      => array('lat','lon','number','address','postcode','city', 'region', 'country', 'countryCode'),
 		'draggable'    => true,

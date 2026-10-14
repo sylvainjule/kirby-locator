@@ -1,14 +1,9 @@
 <template>
-    <div class="k-bubbles-field-preview k-locator-field-preview">
-        <ul class="k-bubbles">
-            <li class="k-bubble" data-has-text="true">
-                <figure class="k-frame k-image-frame k-image" style="--fit: contain; --back: var(--bubble-back);">
-                     <k-icon type="pin" />
-                </figure>
-                <span class="k-bubble-text" v-html="location"></span>
-            </li>
-        </ul>
-    </div>
+    <ul class="k-tags-field-preview k-tags k-locator-field-preview">
+        <li>
+            <k-tag :text="location" icon="pin" theme="light" />
+        </li>
+    </ul>
 </template>
 
 <script>
@@ -46,15 +41,8 @@ export default {
         },
         location() {
             if (this.locationString != "") return this.locationString;
-            else if (this.latLonString) {
-                return (
-                    '<span class="locator-latlon-preview">' +
-                    this.latLonString +
-                    "</span>"
-                );
-            } else {
-                return "…";
-            }
+            else if (this.latLonString) return this.latLonString;
+            else return "…";
         },
     },
 };

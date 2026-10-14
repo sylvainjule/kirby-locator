@@ -1,3 +1,6 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
 .k-locator-field {
     .leaflet-pane {
     	z-index: 1;

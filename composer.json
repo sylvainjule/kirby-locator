@@ -14,7 +14,10 @@
         "getkirby/composer-installer": "^1.1"
     },
     "extra": {
-        "installer-name": "locator"
+        "installer-name": "locator",
+        "kirby": {
+            "compatible": "^6.0"
+        }
     },
     "minimum-stability": "beta"
 }

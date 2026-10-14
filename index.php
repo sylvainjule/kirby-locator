@@ -1,5 +1,9 @@
 <?php
 
+load(array(
+	'SylvainJule\\Locator\\LocatorField' => 'lib/LocatorField.php',
+), __DIR__);
+
 Kirby::plugin('sylvainjule/locator', array(
 	'options' => array(
 		'token'        => '',
@@ -22,7 +26,9 @@ Kirby::plugin('sylvainjule/locator', array(
         'language'     => false,
         'dblclick'     => 'zoom',
 	),
-	'fields'       => require_once __DIR__ . '/lib/fields.php',
+	'fields'       => array(
+		'locator' => SylvainJule\Locator\LocatorField::class,
+	),
 	'fieldMethods' => require_once __DIR__ . '/lib/fieldMethods.php',
     'translations' => array(
         'de' => require_once __DIR__ . '/lib/languages/de.php',

@@ -468,10 +468,7 @@ export default {
             }
 
             if (this.geocoding && this.location.length) {
-                const fetchInit =
-                    this.geocoding == "mapbox"
-                        ? { referrerPolicy: "strict-origin-when-cross-origin" }
-                        : {};
+                const fetchInit = { referrerPolicy: "strict-origin-when-cross-origin" }
 
                 fetch(this.searchQuery, fetchInit)
                     .then((response) => response.json())

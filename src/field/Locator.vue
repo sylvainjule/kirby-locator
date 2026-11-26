@@ -331,8 +331,8 @@ export default {
                 attribution: this.attribution,
             });
 
-            // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API
-            if (this.tiles == "mapbox" || this.tiles == "mapbox.custom") {
+            // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API + OSM
+            if (this.tiles == "mapbox" || this.tiles == "mapbox.custom" || this.tiles == "openstreetmap") {
                 this.tileLayer.on(
                     "loading",
                     () =>
@@ -466,10 +466,7 @@ export default {
             }
 
             if (this.geocoding && this.location.length) {
-                const fetchInit =
-                    this.geocoding == "mapbox"
-                        ? { referrerPolicy: "strict-origin-when-cross-origin" }
-                        : {};
+                const fetchInit = { referrerPolicy: "strict-origin-when-cross-origin" }
 
                 fetch(this.searchQuery, fetchInit)
                     .then((response) => response.json())

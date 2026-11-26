@@ -113,6 +113,12 @@ class LocatorField extends InputField
     protected string $tiles = 'positron';
 
     /**
+     * API key for CARTO basemap tiles
+     */
+    #[Prop]
+    protected string $tilesKey = '';
+
+    /**
      * Zoom levels of the map (`min`, `default`, `max`)
      */
     #[Prop]

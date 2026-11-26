@@ -103,6 +103,7 @@ export default {
     },
     props: {
         tiles: String,
+        tilesKey: String,
         center: Object,
         zoom: Object,
         saveZoom: Boolean,
@@ -196,10 +197,11 @@ export default {
                 return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
             } else if (this.tiles == "light_all" || this.tiles == "voyager") {
                 return (
-                    "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/" +
+                    "https://basemaps.cartocdn.com/rastertiles/" +
                     this.tiles +
                     "/{z}/{x}/{y}" +
-                    (L.Browser.retina ? "@2x.png" : ".png")
+                    (L.Browser.retina ? "@2x.png" : ".png") +
+                    (this.tilesKey ? "?key=" + encodeURIComponent(this.tilesKey) : "")
                 );
             } else return "";
         },

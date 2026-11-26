@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 @mixin small-controls {
 	width: 30px !important;
 	height: 30px !important; 

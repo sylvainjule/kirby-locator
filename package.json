@@ -6,7 +6,7 @@
   "author": "Sylvain Julé",
   "license": "MIT",
   "scripts": {
-    "dev": "kirbyup serve src/index.js",
+    "dev": "kirbyup dev src/index.js",
     "build": "kirbyup src/index.js",
     "lint": "eslint \"src/**/*.{js,vue}\"",
     "lint:fix": "npm run lint -- --fix",
@@ -16,8 +16,11 @@
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-vue": "^8.0.3",
-    "kirbyup": "^3.1.4",
+    "kirbyup": "^4.0.0-alpha.9",
     "leaflet": "^1.7.1",
     "prettier": "^2.4.1"
+  },
+  "overrides": {
+    "rolldown": "1.2.12"
   }
 }

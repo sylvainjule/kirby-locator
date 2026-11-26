@@ -1,15 +1,15 @@
 <template>
     <k-field
-        :input="_uid"
+        :input="id"
         v-bind="$props"
         :class="['k-locator-field', { filled: valueExists }, status]"
     >
         <!-- Edit button -->
-        <template slot="options">
+        <template #options>
             <div class="k-button-group">
                 <k-button
                     v-if="valueExists && filledStatus == 'closed'"
-                    :id="_uid"
+                    :id="id"
                     icon="edit"
                     @click="toggle('open')"
                     size="xs"
@@ -19,7 +19,7 @@
                 </k-button>
                 <k-button
                     v-if="valueExists && filledStatus == 'open'"
-                    :id="_uid"
+                    :id="id"
                     icon="trash"
                     @click="resetValue"
                     size="xs"
@@ -29,7 +29,7 @@
                 </k-button>
                 <k-button
                     v-if="valueExists && filledStatus == 'open' && collapse"
-                    :id="_uid"
+                    :id="id"
                     icon="collapse"
                     @click="toggle('closed')"
                     size="xs"
@@ -41,9 +41,9 @@
         </template>
         <div class="k-input k-locator-input" data-theme="field">
             <form class="k-locator-input-inner">
-                <k-text-input 
+                <k-text-input
                     ref="input"
-                    v-model="location"
+                    :value="location"
                     :placeholder="$t('locator.placeholder')"
                     @input="onLocationInput" />
                 <button
@@ -51,16 +51,12 @@
                     type="submit"
                     @click="getCoordinates"
                 >
-                    <svg><use href="#icon-locator-locate" /></svg>
+                    <k-icon type="locator-locate" />
                     {{ $t("locator.locate") }}
                 </button>
             </form>
             <k-picklist-dropdown v-if="autocomplete" ref="dropdown" :class="['k-locator-dropdown', {'hidden': !dropdownOptions.length && (!location.length || forceHideDropdown)}]" :options="dropdownOptions" :search="false" @input="select" />
         </div>
-
-        <k-dialog ref="dialog" class="k-locator-error-dialog" @close="error = ''" :cancelButton="$t('close')" :submitButton="false">
-            <k-text>{{ error }}</k-text>
-        </k-dialog>
 
         <div class="k-locator-container">
             <div :class="['map-container', { 'map-only': !display }]">
@@ -68,14 +64,12 @@
             </div>
 
             <div v-if="valueExists && display" :class="['content', liststyle]">
-                <div
-                    v-for="key in display"
-                    v-if="value[key]"
-                    class="content-block"
-                >
-                    <div class="title">{{ translatedTitle(key) }}</div>
-                    <div class="value">{{ value[key] }}</div>
-                </div>
+                <template v-for="key in display" :key="key">
+                    <div v-if="value[key]" class="content-block">
+                        <div class="title">{{ translatedTitle(key) }}</div>
+                        <div class="value">{{ value[key] }}</div>
+                    </div>
+                </template>
             </div>
             <k-empty
                 v-else-if="!valueExists"
@@ -90,6 +84,7 @@
 </template>
 
 <script>
+import { useId } from "vue";
 import L from "leaflet";
 
 export default {
@@ -99,7 +94,6 @@ export default {
             marker: null,
             tileLayer: null,
             location: "",
-            error: "",
             limit: 1,
             dropdownOptions: [],
             filledStatus: this.collapse ? 'closed' : 'open',
@@ -125,6 +119,10 @@ export default {
         markerColor: String,
 
         // general options
+        id: {
+            type: [Number, String],
+            default: () => useId(),
+        },
         label: String,
         disabled: Boolean,
         help: String,
@@ -134,9 +132,10 @@ export default {
         required: Boolean,
         type: String,
     },
+    emits: ["input"],
     computed: {
         mapId() {
-            return "map-" + this._uid;
+            return "map-" + this.id;
         },
         icon() {
             let color = this.markerColor;
@@ -251,7 +250,9 @@ export default {
         this.initMap();
     },
     methods: {
-        onLocationInput() {
+        onLocationInput(location) {
+            this.location = location;
+
             if (!this.autocomplete) return false;
 
             if (this.geocoding && this.location.length) {
@@ -284,11 +285,10 @@ export default {
                         }
                     })
                     .catch((error) => {
-                        this.error = this.$t("locator.error");
-                        this.$refs.dialog.open();
+                        this.showError(this.$t("locator.error"));
                         this.dropdownOptions = []
                     });
-            } 
+            }
             else {
                 this.dropdownOptions = []
             }
@@ -353,12 +353,10 @@ export default {
 
             if (this.saveZoom && this.autoSaveZoom) {
                 this.map.on("zoomend", () => {
-                    this.value = {
+                    this.$emit("input", {
                         ...this.value,
                         zoom: this.map.getZoom(),
-                    };
-
-                    this.$emit("input", this.value);
+                    });
                     this.dragged = true;
                     setTimeout(() => {
                         this.dragged = false;
@@ -423,7 +421,7 @@ export default {
                 let position = this.marker.getLatLng();
                 let _this = this;
 
-                this.value = {
+                let value = {
                     lat: parseFloat(position.lat),
                     lon: parseFloat(position.lng),
                     number: null,
@@ -437,13 +435,13 @@ export default {
                 };
 
                 if (this.saveZoom) {
-                    this.value = {
-                        ...this.value,
+                    value = {
+                        ...value,
                         zoom: this.map.getZoom(),
                     };
                 }
 
-                this.$emit("input", this.value);
+                this.$emit("input", value);
                 this.dragged = true;
                 setTimeout(() => {
                     _this.dragged = false;
@@ -474,25 +472,25 @@ export default {
                 fetch(this.searchQuery, fetchInit)
                     .then((response) => response.json())
                     .then((response) => {
+                        let value = this.value;
+
                         if (response.length || Object.keys(response).length) {
                             if (this.geocoding == "nominatim") {
-                                this.setNominatimResponse(response);
+                                value = this.nominatimValue(response);
                             } else if (this.geocoding == "mapbox") {
-                                this.setMapboxResponse(response);
+                                value = this.mapboxValue(response);
                             }
                             this.location = "";
                         } else {
-                            this.error = this.$t("locator.empty_response");
-                            this.$refs.dialog.open();
-                            this.value = {};
+                            this.showError(this.$t("locator.empty_response"));
+                            value = {};
                         }
 
-                        this.$emit("input", this.value);
+                        this.$emit("input", value);
                         this.forceHideDropdown = false
                     })
                     .catch((error) => {
-                        this.error = this.$t("locator.error");
-                        this.$refs.dialog.open();
+                        this.showError(this.$t("locator.error"));
                         this.forceHideDropdown = false
                     });
             }
@@ -508,7 +506,7 @@ export default {
             let lon = arr[1].replace(" ", "");
             let _this = this;
 
-            this.value = {
+            let value = {
                 lat: parseFloat(lat),
                 lon: parseFloat(lon),
                 number: null,
@@ -522,23 +520,23 @@ export default {
             };
 
             if (this.saveZoom) {
-                this.value = {
-                    ...this.value,
+                value = {
+                    ...value,
                     zoom: this.map.getZoom(),
                 };
             }
 
             this.location = "";
-            this.$emit("input", this.value);
+            this.$emit("input", value);
             this.dragged = true;
             setTimeout(() => {
                 _this.dragged = false;
             }, 500);
         },
-        setNominatimResponse(response) {
+        nominatimValue(response) {
             response = response[0];
 
-            this.value = {
+            let value = {
                 lat: parseFloat(response.lat),
                 lon: parseFloat(response.lon),
                 number: response.address.house_number,
@@ -552,22 +550,24 @@ export default {
                 country: response.address.country,
                 countryCode: response.address?.country_code,
                 postcode: response.address.postcode,
-                address: 
+                address:
                     response.address.road ||
                     response.address.square,
                 osm: response.osm_id,
             };
             if (this.saveZoom) {
-                this.value = {
-                    ...this.value,
+                value = {
+                    ...value,
                     zoom: this.map.getZoom(),
                 };
             }
+
+            return value;
         },
-        setMapboxResponse(response) {
+        mapboxValue(response) {
             response = response.features[0];
 
-            this.value = {
+            let value = {
                 lat: parseFloat(response.center[1]),
                 lon: parseFloat(response.center[0]),
                 number: response.address || "",
@@ -603,11 +603,23 @@ export default {
                 address: response.text || "",
             };
             if (this.saveZoom) {
-                this.value = {
-                    ...this.value,
+                value = {
+                    ...value,
                     zoom: this.map.getZoom(),
                 };
             }
+
+            return value;
+        },
+        showError(text) {
+            this.$panel.dialog.open({
+                component: "k-text-dialog",
+                props: {
+                    text: text,
+                    cancelButton: this.$t("close"),
+                    submitButton: false,
+                },
+            });
         },
         capitalize(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
@@ -638,13 +650,12 @@ export default {
             if (this.marker && this.draggable) this.marker.dragging.enable();
         },
         resetValue() {
-            this.value = {};
-            this.$emit("input", this.value);
+            this.$emit("input", {});
         },
     },
 };
 </script>
 
 <style lang="scss">
-@import "../assets/css/styles.scss";
+@use "../assets/css/styles.scss";
 </style>

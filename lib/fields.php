@@ -8,6 +8,9 @@ return array(
             	$tiles = $tiles ?? option('sylvainjule.locator.tiles');
             	return str_replace('positron', 'light_all', $tiles);
             },
+            'tilesKey' => function($tilesKey = null) {
+            	return $tilesKey ?? option('sylvainjule.locator.tilesKey');
+            },
             'geocoding' => function($geocoding = null) {
             	return $geocoding ?? option('sylvainjule.locator.geocoding');
             },

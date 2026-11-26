@@ -79,6 +79,14 @@ return array(
 );
 ```
 
+CARTO now requires a (free) API key to serve the `positron`/`voyager` basemap tiles (as mentioned in [this issue](https://github.com/sylvainjule/kirby-locator/issues/66)). Get one at [carto.com/basemaps](https://carto.com/basemaps) and set it in your `config.php`:
+
+```php
+return array(
+    'sylvainjule.locator.tilesKey' => 'your-api-key',
+);
+```
+
 #### 3.2. Mapbox tiles
 
 ![tiles-mapbox-2](https://user-images.githubusercontent.com/14079751/48648037-2c542380-e9ee-11e8-916d-ca240a40bc20.jpg)

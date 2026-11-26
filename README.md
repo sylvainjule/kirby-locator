@@ -28,7 +28,7 @@ A simple map & geolocation field, built on top of open-source services and Mapbo
 
 ## 1. Installation
 
-> Kirby 3: up to 1.1.4. Kirby 4: 2.0.0+
+> Kirby 3: up to 1.1.4. Kirby 4, Kirby 5: 2.x. Kirby 6: 3+
 
 Download and copy this repository to ```/site/plugins/locator```
 

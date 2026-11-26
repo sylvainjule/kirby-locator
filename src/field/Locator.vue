@@ -331,8 +331,8 @@ export default {
                 attribution: this.attribution,
             });
 
-            // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API
-            if (this.tiles == "mapbox" || this.tiles == "mapbox.custom") {
+            // add event listeners to override the panel's referrerpolicy while loading tiles through Mapbox API + OSM
+            if (this.tiles == "mapbox" || this.tiles == "mapbox.custom" || this.tiles == "openstreetmap") {
                 this.tileLayer.on(
                     "loading",
                     () =>
